@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.logo{
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0 1rem;
+    color: #f00;
+}
+
+.menu-bars,
+.user-icon{
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    background-color: #f00;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    line-height: 35px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.menu-bars{
+    color: #f00;
+    background-color: #fff;
+    display: none;
+}
+
+.nav-bar{
+    width: 250px;
+    height: 100vh;
+    border-right: 1px solid #f0f0f0;
+    padding: 5rem 1rem 0 1rem;
+    transition: .2s linear;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color: #fff;
+}
+.nav-bar.active{
+    left: 0;
+}
+.nav-bar .logut-btn,
+.nav-bar a{
+    text-decoration: none;
+    color: #666;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: block;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+.nav-bar a:hover,
+.nav-bar a.active{
+    color: #f00;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.nav-bar a i{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+}
+.nav-bar .logout-btn{
+    width: 100%;
+    text-align: start;
+    border: none;
+    background: none;
+    color: #666;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.nav-bar a:hover .logout-btn{
+    color: #f00;
+}
+
+section{
+    margin-top: 4rem;
+    margin-left: 250px;
+    transition: .2s;
+    min-height: 100vh;
+    padding: 0 20px;
+}
+.calendar .days,
+.calendar #dates{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 2px;
+}
+.calendar .day-name{
+    display: block;
+    background-color: #f7f7f7;
+    color: #999;
+    font-weight: bold;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.calendar .date{
+    display: block;
+    background-color: #f7f7f7;
+    height: 100px;
+    padding: 10px;
+    position: relative;
+}
+.calendar .date .name-tag{
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: .8rem;
+    color: #fff;
+    margin: 2px 0;
+    /* position: absolute; */
+}
+.calendar .date .name-tag.success{
+    background-color: #0f0;
+}
+.calendar .date .name-tag.pending{
+    background-color: #ff0;
+}
+.calendar .date .name-tag.reject{
+    background-color: #f00;
+}
+.calendar .calendar-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+.cbtn{
+    outline: none;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+@media (max-width: 768px){
+    .menu-bars{
+        display: inline-block;
+    }
+    .nav-bar{
+        left: -250px;
+    }
+    section{
+        margin-top: 5rem;
+        margin-left: 0px;
+    }
+}

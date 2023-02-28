@@ -34,7 +34,7 @@
                     </div>
                     <div class="row my-4">
                         <div class="col">
-                            Have no account? <a href="{{ route('user.register') }}" class="text-decoration-none">Register here</a>
+                            Have no account? <a href="{{ route('register') }}" class="text-decoration-none">Register here</a>
                         </div>
                     </div>
                     <div class="row my-4">

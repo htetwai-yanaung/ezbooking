@@ -16,12 +16,22 @@
 <body>
 <header>
     <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-        <a href="#" class="logo text-decoration-none text-danger">LOGO</a>
+        <a href="#" class="logo text-decoration-none text-danger h4">EZBooking</a>
         <div class="d-flex col-lg-3 col-sm-6">
             <input type="text" name="" id="" class="form-control" placeholder="Search...">
             <button class="btn btn-outline-primary ms-2"><i class="fa-solid fa-search"></i></button>
         </div>
-        <a href="#" class="user-icon"><i class="fa-solid fa-user"></i></a>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            @if (Auth::user())
+                <span>{{ Auth::user()->name }} </span>
+                <button class="btn btn-outline-danger">logout</button>
+            @else
+                <a href="{{ route('login') }}" class="text-decoration-none">login</a> |
+                <a href="{{ route('register') }}" class="text-decoration-none">register</a>
+
+            @endif
+        </form>
     </div>
     <nav class="nav-bar">
         <div class="d-flex">

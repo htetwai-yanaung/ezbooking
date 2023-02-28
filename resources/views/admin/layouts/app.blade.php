@@ -30,6 +30,7 @@
     </form>
 </nav>
 @yield('content')
+@yield('scriptSource')
 </body>
 
 <script>
@@ -38,49 +39,6 @@
     bars.onclick = () => {
         document.querySelector('.fa-solid').classList.toggle('fa-close');
         navBar.classList.toggle('active');
-    }
-
-    let date = new Date();
-    let currentDate = date.getDate();
-    let currentMonth = date.getMonth();
-    let currentYear = date.getFullYear();
-
-    let months = ['January','February','Match','April','May','June','July','August','September','October','November','December'];
-
-    const renderCalendar = () => {
-        let list = '';
-        let prevMonthDays = new Date(currentYear, currentMonth, 1).getDay();
-        let currentMonthDates = new Date(currentYear, currentMonth+1, 0).getDate();
-        for(var i=prevMonthDays; i>0; i--){
-            list += `<span class="date"></span>`;
-        }
-        for(var i=1; i<=currentMonthDates; i++){
-            list += `<span class="date" id=${i}>${i}</span>`;
-        }
-        document.querySelector('.calendar-header h3').innerText = `${months[currentMonth]} ${currentYear}`;
-        document.querySelector('#dates').innerHTML = list;
-        if(currentMonth == new Date().getMonth()){
-            document.getElementById(currentDate).innerHTML += `<span class="name-tag success">Smith</span>`;
-        }
-    }
-    renderCalendar();
-
-    let prev = document.querySelector('#prev');
-    let next = document.querySelector('#next');
-    prev.onclick = () => {
-
-        currentMonth = currentMonth==0 ? currentMonth : currentMonth - 1;
-        console.log(currentMonth);
-        renderCalendar();
-    }
-    next.onclick = () => {
-        if(currentMonth == 11){
-            currentMonth = 0;
-            currentYear ++;
-        }else{
-            currentMonth++;
-        }
-        renderCalendar();
     }
 </script>
 </html>

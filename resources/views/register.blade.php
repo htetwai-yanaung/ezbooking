@@ -52,7 +52,7 @@
                     </div>
                     <div class="row my-4">
                         <div class="col">
-                            Already user? <a href="{{ route('user.login') }}" class="text-decoration-none">Login here</a>
+                            Already user? <a href="{{ route('login') }}" class="text-decoration-none">Login here</a>
                         </div>
                     </div>
                     <div class="row my-4">

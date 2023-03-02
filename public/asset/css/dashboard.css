@@ -129,6 +129,9 @@ section{
     padding: 10px;
     position: relative;
 }
+.calendar .date:hover{
+    background-color: #fff;
+}
 .calendar .date .name-tag{
     display: inline-block;
     padding: 5px 10px;

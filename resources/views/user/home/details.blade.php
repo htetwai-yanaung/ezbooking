@@ -1,11 +1,11 @@
 @extends('user.layouts.app')
 
 @section('content')
-<section style="margin: 10rem 0;">
-    <div class="container">
+<section class="mb-b">
+    <div class="container-sm px-sm-1" style="margin: 100px auto;">
         <div class="row">
-            <div class="col">
-                <h3 class="bg-light text-center p-3">Information</h3>
+            <div class="col-md col-sm-12 bg-white shadow-sm mx-2 pb-2 rounded">
+                <h3 class="text-center p-3">Information</h3>
                 <div class="row">
                     <div class="content">
                         <h5>${{ $roomType->price }}/Night</h5>
@@ -24,7 +24,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row">
+                    <div id="carouselExample" class="carousel carousel-dark slide">
+                        <div class="carousel-inner">
+                          <div class="carousel-item" style="height: 300px;">
+                            <img src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-01.jpg" class="d-block h-100 mx-auto object-fit-contain" alt="...">
+                          </div>
+                          <div class="carousel-item active" style="height: 300px;">
+                            <img src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-01.jpg" class="d-block h-100 mx-auto object-fit-contain" alt="...">
+                          </div>
+                          <div class="carousel-item" style="height: 300px;">
+                            <img src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-01.jpg" class="d-block h-100 mx-auto object-fit-contain" alt="...">
+                          </div>
+                          <div class="carousel-item" style="height: 300px;">
+                            <img src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-01.jpg" class="d-block h-100 mx-auto object-fit-contain" alt="...">
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                </div>
+                {{-- <div class="row mb-2 p-1">
                     <div class="img-container col-6 px-1">
                         <img id="room-img" src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-01.jpg" alt="">
                     </div>
@@ -32,43 +58,55 @@
                         <img id="room-img" src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-04.jpg" alt="">
                     </div>
                 </div>
-                <div class="row">
+                <div class="row p-1">
                     <div class="img-container col-6 px-1">
                         <img id="room-img" src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-05.jpg" alt="">
                     </div>
                     <div class="img-container col-6 px-1">
                         <img id="room-img" src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-07.jpg" alt="">
                     </div>
-                </div>
+                </div> --}}
             </div>
-            <form action="{{ route('booking',Auth::user()->id) }}" method="POST" class="col">
-                <h3 class="bg-light text-center p-3">Booking</h3>
+            <form action="{{ route('booking',Auth::user()->id) }}" method="POST" class="col-md col-sm-12 bg-white shadow-sm mx-2 rounded">
+                <h3 class="text-center p-3">Booking</h3>
                 <input type="hidden" name="room_type_id" value="{{ $roomType->id }}">
                 @csrf
                 <div class="row mb-4">
                     <div class="col">
                         <label class="h5" for="">Check-in</label>
                         <input type="date" name="check_in" class="form-control">
+                        @error('check_in')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col">
                         <label class="h5" for="">Check-out</label>
                         <input type="date" name="check_out" class="form-control">
+                        @error('check_out')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col">
                         <label class="h5" for="">Adult</label>
                         <input type="number" name="adult" value="1" class="form-control">
+                        @error('adult')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col">
                         <label class="h5" for="">Children</label>
                         <input type="number" name="child" value="0" class="form-control">
+                        @error('child')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-6">
                         <label class="h5" for="">Services</label>
-                        <select name="wifi" class="form-select">
+                        <select name="wifi" id="services" class="form-select">
                             <option value="">Wifi</option>
                             <option value="1">Normal - $5/day</option>
                             <option value="2">Strong - $10/day</option>
@@ -88,30 +126,30 @@
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="form-check border-bottom py-2">
-                            <input class="form-check-input" name="ext_services[]" type="checkbox" value="breakfast" id="flexCheck1">
-                            <label class="form-check-label" for="flexCheck1">Breakfast</label>
+                            <input class="form-check-input" name="ext_services[]" type="checkbox" value="breakfast" id="breakfast">
+                            <label class="form-check-label" for="breakfast">Breakfast</label>
                             <label class="form-check-label float-end">$30 / Day</label>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-check border-bottom py-2">
-                            <input class="form-check-input" name="ext_services[]" type="checkbox" value="dinner" id="flexCheck2">
-                            <label class="form-check-label" for="flexCheck2">Dinner</label>
+                            <input class="form-check-input" name="ext_services[]" type="checkbox" value="dinner" id="dinner">
+                            <label class="form-check-label" for="dinner">Dinner</label>
                             <label class="form-check-label float-end">$40 / Day</label>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-check border-bottom py-2">
-                            <input class="form-check-input" name="ext_services[]" type="checkbox" value="driver" id="flexCheck3">
-                            <label class="form-check-label" for="flexCheck3">Driver</label>
+                            <input class="form-check-input" name="ext_services[]" type="checkbox" value="driver" id="driver">
+                            <label class="form-check-label" for="driver">Driver</label>
                             <label class="form-check-label float-end">$15 / Day</label>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col">
                         <button class="btn btn-primary">Book Now</button>
-                        <span class="float-end">Total $50</span>
+                        <span class="float-end align-middle fw-bold">Total $<span id="total">50</span></span>
                     </div>
                 </div>
             </form>
@@ -151,4 +189,64 @@
         </div>
     </div> --}}
 </section>
+@endsection
+
+@section('scriptSource')
+<script>
+    $(document).ready(function() {
+        $total = 50;
+        $wifi = 0;
+        $('#services').change(function() {
+            if(this.value == 1){
+                $wifi = 5;
+                console.log(this.value)
+            }else if(this.value == 2){
+                $wifi = 10;
+                console.log(this.value)
+            }else if(this.value == 3){
+                $wifi = 50;
+                console.log(this.value)
+            }else{
+                $wifi = 0;
+            }
+            $('#total').text($total + $wifi)
+        })
+        $('#breakfast').change(function() {
+            if ($(this).is(':checked')) {
+                $total += 30;
+                console.log($total);
+                $('#total').text($total + $wifi);
+            }
+            else {
+                $total -= 30;
+                console.log($total);
+                $('#total').text($total + $wifi);
+            }
+        });
+        $('#dinner').change(function() {
+            if ($(this).is(':checked')) {
+                $total += 40;
+                console.log($total);
+                $('#total').text($total + $wifi);
+            }
+            else {
+                $total -= 40;
+                console.log($total);
+                $('#total').text($total + $wifi);
+            }
+        })
+        $('#driver').change(function() {
+            if ($(this).is(':checked')) {
+                $total += 15;
+                console.log($total);
+                $('#total').text($total + $wifi);
+            }
+            else {
+                $total -= 15;
+                console.log($total);
+                $('#total').text($total + $wifi);
+            }
+        })
+    });
+</script>
 @endsection

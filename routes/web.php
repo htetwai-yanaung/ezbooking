@@ -19,8 +19,9 @@ Route::prefix('rooms')->group(function() {
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/role', [AdminController::class, 'role'])->name('role');
-    Route::middleware('adminMiddleware')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::middleware('adminMiddleware')->prefix('dashboard')->group(function () {
+        Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/room-create', [AdminController::class, 'roomCreate'])->name('dashboard.roomCreate');
     });
     Route::middleware('userMiddleware')->group(function () {
         Route::post('/booking/{user_id}', [BookingController::class, 'book'])->name('booking');

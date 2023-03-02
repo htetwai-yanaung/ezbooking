@@ -22,15 +22,14 @@
     <a href="#" class="user-icon"><i class="fa-solid fa-user"></i></a>
 </header>
 <nav class="nav-bar">
-    <a href="#bookings" class="active"><i class="uil uil-apps"></i> bookings</a>
-    <a href="#rooms"><i class="uil uil-home"></i> rooms</a>
+    <a href="{{ route('dashboard') }}" class="active"><i class="uil uil-apps"></i> bookings</a>
+    <a href="{{ route('dashboard.roomCreate') }}"><i class="uil uil-home"></i> rooms</a>
     <form action="{{ route('logout') }}" method="POST">
         @csrf
         <a href=""><button class="logout-btn"><i class="uil uil-sign-out-alt"></i> logout</button></a>
     </form>
 </nav>
 @yield('content')
-@yield('scriptSource')
 </body>
 
 <script>

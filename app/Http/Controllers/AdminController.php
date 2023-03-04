@@ -47,8 +47,17 @@ class AdminController extends Controller
         return view('admin.booking.index')->with(['checkInes' => $checkIn_array, 'checkInUserNames' => $checkIn_user_name_array]);
     }
 
+    //room index
+    public function roomIndex(){
+        return view('admin.rooms.index');
+    }
+
     //room create
     public function roomCreate(){
         return view('admin.rooms.create');
+    }
+    //room type create
+    public function roomTypeIndex(){
+        return view('admin.roomTypes.index');
     }
 }

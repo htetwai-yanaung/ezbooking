@@ -8,9 +8,9 @@
                 <h3 class="text-center p-3">Information</h3>
                 <div class="row">
                     <div class="content">
-                        <h5>${{ $roomType->price }}/Night</h5>
-                        <h3>{{ $roomType->name }}</h3>
-                        <p>{{ $roomType->description }}</p>
+                        <h5>${{ $room->price }}/Night</h5>
+                        <h3>{{ $room->name }}</h3>
+                        <p>{{ $room->description }}</p>
                         <div class="container mb-3 border-bottom pb-2">
                             <div class="row my-2">
                                 <div class="col p-0">1-3 persons</div>
@@ -27,18 +27,11 @@
                 <div class="row">
                     <div id="carouselExample" class="carousel carousel-dark slide">
                         <div class="carousel-inner">
-                          <div class="carousel-item" style="height: 300px;">
-                            <img src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-01.jpg" class="d-block h-100 mx-auto object-fit-contain" alt="...">
+                          @foreach ($images as $key=>$image)
+                          <div class="carousel-item @if($key == 0) active @endif" style="height: 300px;">
+                            <img src="{{ url('asset/images/'.$image) }}" class="d-block h-100 mx-auto object-fit-contain" alt="...">
                           </div>
-                          <div class="carousel-item active" style="height: 300px;">
-                            <img src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-01.jpg" class="d-block h-100 mx-auto object-fit-contain" alt="...">
-                          </div>
-                          <div class="carousel-item" style="height: 300px;">
-                            <img src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-01.jpg" class="d-block h-100 mx-auto object-fit-contain" alt="...">
-                          </div>
-                          <div class="carousel-item" style="height: 300px;">
-                            <img src="https://demo.ovatheme.com/hotelft/wp-content/uploads/2022/02/gallery-product-room-01.jpg" class="d-block h-100 mx-auto object-fit-contain" alt="...">
-                          </div>
+                          @endforeach
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -67,9 +60,10 @@
                     </div>
                 </div> --}}
             </div>
-            <form action="{{ route('booking',Auth::user()->id) }}" method="POST" class="col-md col-sm-12 bg-white shadow-sm mx-2 rounded">
+            <form action="{{ route('booking') }}" method="POST" class="col-md col-sm-12 bg-white shadow-sm mx-2 rounded">
                 <h3 class="text-center p-3">Booking</h3>
-                <input type="hidden" name="room_type_id" value="{{ $roomType->id }}">
+                <input type="hidden" name="room_type_id" value="{{ $room->id }}">
+                <input type="hidden" name="user_id" value="{{ Auth::check() ? Auth::user()->id : null }}">
                 @csrf
                 <div class="row mb-4">
                     <div class="col">

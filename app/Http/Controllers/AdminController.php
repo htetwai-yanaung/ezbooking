@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
 use App\Models\User;
 use App\Models\Booking;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,15 +51,71 @@ class AdminController extends Controller
 
     //room index
     public function roomIndex(){
-        return view('admin.rooms.index');
+        $rooms = Room::with('roomType')->get();
+        return view('admin.rooms.index')->with(['rooms' => $rooms]);
     }
 
     //room create
     public function roomCreate(){
-        return view('admin.rooms.create');
+        $roomTypes = RoomType::get();
+        return view('admin.rooms.create')->with([
+            'roomTypes' => $roomTypes
+        ]);
     }
+
+    //room store
+    public function roomStore(Request $request){
+        $this->checkRoomValidation($request);
+
+        $coverPhoto = "cv".uniqid()."_".$request->file('cover_photo')->getClientOriginalName();
+        $request->file('cover_photo')->move(public_path('asset/images'),$coverPhoto);
+
+        $imageNames = [];
+        foreach($request->file('images') as $image){
+            $imageName = uniqid()."_".$image->getClientOriginalName();
+            array_push($imageNames, $imageName);
+            $image->move(public_path('asset/images'), $imageName);
+        }
+
+        $room = [
+            'name' => $request->name,
+            'room_type_id' => $request->room_type,
+            'price' => $request->price,
+            'beds' => $request->beds,
+            'bed_count' => $request->bed_count,
+            'description' => $request->description,
+            'cover_photo' => $coverPhoto,
+            'images' => json_encode($imageNames),
+            'status' => $request->status ? $request->status : 'Maintenance',
+        ];
+
+        Room::create($room);
+        return redirect()->route('dashboard.roomIndex')->with(['success' => 'Room successfully created.']);
+
+    }
+
+
+
+
+
+
+
     //room type create
     public function roomTypeIndex(){
         return view('admin.roomTypes.index');
+    }
+
+    private function checkRoomValidation($request){
+        $request->validate([
+            'name' => 'required',
+            'room_type' => 'required',
+            'price' => 'required',
+            'beds' => 'required',
+            'bed_count' => 'required',
+            'cover_photo' => 'required|mimes:jpg,png,jpeg,webp',
+            'description' => 'required',
+            'images' => 'required',
+            'images.*' => 'mimes:jpg,png,jpeg,webp',
+        ]);
     }
 }

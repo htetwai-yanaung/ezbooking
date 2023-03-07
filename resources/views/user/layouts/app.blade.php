@@ -53,7 +53,7 @@
     <div class="container-fluid shadow-sm">
         <div class="row p-3">
             <div class="col-lg col-md col-12 mb-3 mb-md-0">
-                <a href="{{ route('room.types') }}" class="logo text-decoration-none text-primary h4">EZBooking</a>
+                <a href="{{ route('room.index') }}" class="logo text-decoration-none text-primary h4">EZBooking</a>
             </div>
             <div class="col-lg col-md-6 col-9">
                 <div class="d-flex col">
@@ -127,7 +127,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @yield('scriptSource')
-<footer class="p-3 text-center border-top">
+<footer class="p-3 text-center border-top bg-white">
     © 2023 EZBooking, Inc.
 </footer>
 </body>

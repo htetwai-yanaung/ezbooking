@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class BookingController extends Controller
 {
     //book
-    public function book(Request $request, $user_id){
+    public function booking(Request $request){
         $this->checkBookingValidation($request);
         $book = [
-            'user_id' => $user_id,
+            'user_id' => $request->user_id,
             'room_type_id' => $request->room_type_id,
             'check_in' => $request->check_in,
             'check_out' => $request->check_out,
@@ -21,7 +21,7 @@ class BookingController extends Controller
             'ext_services' => json_encode($request->ext_services),
         ];
         Booking::create($book);
-        return redirect()->route('room.types')->with(['success' => 'Booking Success']);
+        return redirect()->route('room.index')->with(['success' => 'Booking Success']);
     }
 
     private function checkBookingValidation($request){

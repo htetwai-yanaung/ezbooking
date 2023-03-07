@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Room;
 use App\Models\User;
 use App\Models\RoomType;
 use Illuminate\Database\Seeder;
@@ -30,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin1234')
         ]);
 
-        $roomTypes = [
+        $rooms = [
             [
                 'name' => 'Lake View 1',
                 'price' => 50,
@@ -50,8 +51,12 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Spacious, bright guestrooms with tasteful furnishing, wooden floor and panoramic windows from the ceiling to the floor.',
             ],
         ];
+
+        $roomTypes = ['Single Room','Double Room','Triple Room','Queen Room','King Room','Standard Room','Deluxe Room','Suite Room'];
         foreach($roomTypes as $roomType){
-            RoomType::create($roomType);
+            RoomType::create([
+                'name' => $roomType
+            ]);
         }
     }
 }

@@ -255,6 +255,7 @@
                     <div class="row">
                         <div class="col">
                             <span class="float-end align-middle fw-bold">Total $<span id="total">{{ $room->price }}</span></span>
+                            <input type="hidden" name="price" value="{{ $room->price }}" id="price">
                         </div>
                     </div>
                 </div>
@@ -372,12 +373,12 @@
             if($checkIn.year == $checkOut.year){
                 if($checkIn.month == $checkOut.month){
                     $total_day = $checkOut.day*1 - $checkIn.day*1;
-                    $('#total').html(($servicePrice + $originalPrice + $wifi) * $total_day);
+                    result();
                     console.log($total_day);
                 }else{
                     $checkin_month_dates = new Date($checkIn.year,$checkIn.month,0).getDate();
                     $total_day = ($checkin_month_dates - $checkIn.day*1) + $checkOut.day*1;
-                    $('#total').html(($servicePrice + $originalPrice + $wifi) * $total_day);
+                    result();
                     console.log($total_day);
                 }
             }
@@ -396,41 +397,47 @@
                 $wifi = 0;
             }
             console.log($wifi);
-            $('#total').html(($servicePrice + $originalPrice + $wifi) * $total_day);
+            result();
         })
 
         $('#breakfast').change(function() {
             if ($(this).is(':checked')) {
                 $servicePrice += 30;
-                $('#total').html(($servicePrice + $originalPrice + $wifi) * $total_day);
+                result();
             }
             else {
                 $servicePrice -= 30;
-                $('#total').html(($servicePrice + $originalPrice + $wifi) * $total_day);
+                result();
             }
         });
 
         $('#dinner').change(function() {
             if ($(this).is(':checked')) {
                 $servicePrice += 40;
-                $('#total').html(($servicePrice + $originalPrice + $wifi) * $total_day);
+                result();
             }
             else {
                 $servicePrice -= 40;
-                $('#total').html(($servicePrice + $originalPrice + $wifi) * $total_day);
+                result();
             }
         })
 
         $('#driver').change(function() {
             if ($(this).is(':checked')) {
                 $servicePrice += 15;
-                $('#total').html(($servicePrice + $originalPrice + $wifi) * $total_day);
+                result();
             }
             else {
                 $servicePrice -= 15;
-                $('#total').html(($servicePrice + $originalPrice + $wifi) * $total_day);
+                result();
             }
         })
+
+        result = () => {
+            $finalResult = ($servicePrice + $originalPrice + $wifi) * $total_day;
+            $('#total').html($finalResult);
+            $('#price').val($finalResult);
+        }
     });
 </script>
 @endsection

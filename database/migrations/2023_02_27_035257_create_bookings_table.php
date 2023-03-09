@@ -21,6 +21,7 @@ return new class extends Migration
             $table->tinyInteger('child')->nullable();
             $table->tinyInteger('wifi')->nullable();
             $table->string('ext_services')->nullable();
+            $table->integer('price');
             $table->timestamps();
         });
     }

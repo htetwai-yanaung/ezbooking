@@ -29,6 +29,7 @@ class BookingController extends Controller
             'child' => $request->child,
             'wifi' => $request->wifi,
             'ext_services' => json_encode($request->ext_services),
+            'price' => $request->price,
         ];
         Booking::create($book);
         return redirect()->route('room.index')->with(['success' => 'Booking Success']);

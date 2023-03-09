@@ -15,6 +15,7 @@ Route::get('/register', [AdminController::class, 'register'])->name('register');
 Route::prefix('rooms')->group(function() {
     Route::get('/index', [RoomController::class, 'index'])->name('room.index');
     Route::get('/details/{id}', [RoomController::class, 'details'])->name('room.details');
+    Route::post('/booking', [BookingController::class, 'booking'])->name('booking');
 });
 
 
@@ -35,8 +36,5 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
             Route::post('/update/{id}', [RoomTypeController::class, 'update'])->name('dashboard.roomTypeUpdate');
             Route::get('/delete/{id}', [RoomTypeController::class, 'delete'])->name('dashboard.roomTypeDelete');
         });
-    });
-    Route::middleware('userMiddleware')->group(function () {
-        Route::post('/booking', [BookingController::class, 'booking'])->name('booking');
     });
 });

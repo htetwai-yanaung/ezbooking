@@ -9,7 +9,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
-        <div class="container">
+        {{-- <div class="container">
             @foreach ($rooms as $room)
             <div class="row mb-4 rounded-4 shadow-sm overflow-hidden bg-white border">
                 <div class="col-md-6 p-0">
@@ -36,6 +36,33 @@
                 </div>
             </div>
             @endforeach
+        </div> --}}
+        <div class="container-fluid">
+            <div class="row row-cols-1 row-cols-md-4">
+                @foreach ($rooms as $room)
+                <div class="col mb-3">
+                    <div class="card h-100 text-left shadow-sm">
+                      <div class="" style="height: 200px; overflow: hidden;">
+                        <img class="card-img-top" src="{{ url('asset/images/'.$room->cover_photo) }}" alt="" style="width: 100%; height: 100%; object-fit: cover">
+                      </div>
+                      <div class="card-body">
+                        <h4 class="card-title">{{ $room->name }}</h4>
+                        <span class="fw-bold"><span class="fs-4 text-primary">${{ $room->price }}</span>/Night</span>
+                        <p class="card-text mt-2">{{ Str::substr($room->description, 0, 100) }} ...</p>
+                        <div class="">
+                            <ul>
+                                <li>Free wifi</li>
+                                <li>{{ $room->bed_count }}-{{ $room->beds }}</li>
+                                <li>200 sqft room</li>
+                                <li>1-Bathroom</li>
+                            </ul>
+                        </div>
+                        <a href="{{ route('room.details',$room->id) }}" class="btn btn-primary">Book Now</a>
+                      </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
         </div>
         {{-- design --}}
     </section>

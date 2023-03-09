@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('room_type_id');
+            $table->foreignId('guest_id');
+            $table->foreignId('room_id');
             $table->string('check_in', 10);
             $table->string('check_out', 10);
             $table->tinyInteger('adult');

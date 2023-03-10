@@ -40,8 +40,8 @@ class AdminController extends Controller
         }
         $checkIn_array = json_encode($checkIn_array);
         foreach($bookings as $booking){
-            $user_id = $booking->user_id;
-            $user = User::find($user_id);
+            $guest_id = $booking->guest_id;
+            $user = User::find($guest_id);
 
             array_push($checkIn_user_name_array, $user->name);
         }

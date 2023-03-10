@@ -5,7 +5,7 @@
 
     <div class="container">
         <div class="row shadow rounded overflow-hidden p-3">
-            <div class="col-6 px-0">
+            <div class="col-md-12 col-lg-6 px-0">
                 <div class="content h-100 d-flex flex-column justify-content-between">
                     <h5>${{ $room->price }}/Night</h5>
                     <h3>{{ $room->name }}</h3>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 bg-danger px-0">
+            <div class="col-md-12 col-lg-6 px-0">
                 <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
                         @foreach ($images as $key=>$image)
@@ -172,7 +172,7 @@
             </div> --}}
         </div>
         <form action="{{ route('booking') }}" method="POST" class="row">
-            <div class="col-6">
+            <div class="col-12 col-md-6 mb-3">
                 <div class="rounded-3 shadow bg-white p-3 pt-0">
                     <h3 class="text-center p-3">Booking</h3>
                     <input type="hidden" name="room_id" value="{{ $room->id }}">
@@ -260,18 +260,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <div class="rounded-3 shadow bg-white p-3 pt-0">
                     <h3 class="text-center p-3">Guest</h3>
                     <div class="row mb-4">
-                        <div class="col">
+                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
                             <label class="h5" for="">Name</label>
                             <input type="text" name="guestName" class="form-control" placeholder="Enter your full name">
                             @error('guestName')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col">
+                        <div class="col-md-12 col-lg-6">
                             <label class="h5" for="">Email</label>
                             <input type="email" name="guestEmail" class="form-control" placeholder="Enter your email">
                             @error('guestEmail')
@@ -280,14 +280,14 @@
                         </div>
                     </div>
                     <div class="row mb-4">
-                        <div class="col">
+                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
                             <label class="h5" for="">Phone Number</label>
                             <input type="number" name="guestPhone" class="form-control" placeholder="Enter your phone number">
                             @error('guestPhone')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col">
+                        <div class="col-md-12 col-lg-6">
                             <label class="h5" for="">Nationality</label>
                             <input type="text" name="guestNationality" class="form-control" placeholder="Eg: Myanmar">
                             @error('guestNationality')

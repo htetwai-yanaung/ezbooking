@@ -10,7 +10,6 @@
     <div class="mt-3">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <h4 class="text-muted">Booking list</h4>
-            <a href="{{ route('dashboard.roomCreate') }}" class="btn btn-primary">Create</a>
         </div>
         <table class="table table-bordered bg-white">
             <thead>

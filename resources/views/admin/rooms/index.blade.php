@@ -36,7 +36,7 @@
                         </div>
                     </td>
                     <td class="text-center">
-                        <a href="" class="action edit"><i class="fa-solid fa-pen"></i></a>
+                        <a href="{{ route('dashboard.roomEdit', $room->id) }}" class="action edit"><i class="fa-solid fa-pen"></i></a>
                         <a href="" class="action delete"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>

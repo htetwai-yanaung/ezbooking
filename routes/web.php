@@ -32,6 +32,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
             Route::get('/index', [AdminController::class, 'roomIndex'])->name('dashboard.roomIndex');
             Route::get('/create', [AdminController::class, 'roomCreate'])->name('dashboard.roomCreate');
             Route::post('/store', [AdminController::class, 'roomStore'])->name('dashboard.roomStore');
+            Route::get('/edit/{id}', [AdminController::class, 'roomEdit'])->name('dashboard.roomEdit');
+            Route::post('/update/{id}', [AdminController::class, 'roomUpdate'])->name('dashboard.roomUpdate');
         });
         Route::prefix('room-types')->group(function() {
             Route::get('/index', [RoomTypeController::class, 'index'])->name('dashboard.roomTypeIndex');

@@ -9,6 +9,7 @@ use App\Models\RoomType;
 use App\Models\FreeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller
 {
@@ -104,7 +105,71 @@ class AdminController extends Controller
 
     }
 
+    //edit room
+    public function roomEdit($id){
+        $room = Room::find($id);
+        $roomTypes = RoomType::get();
+        $services = FreeService::get();
+        $oldServices = json_decode($room->services);
+        return view('admin.rooms.edit')->with([
+            'room' => $room,
+            'roomTypes' => $roomTypes,
+            'services' => $services,
+            'oldServices' => $oldServices
+        ]);
+    }
 
+    //update room
+    public function roomUpdate(Request $request, $id){
+        $request->validate([
+            'title' => 'required',
+            'room_number' => 'required',
+            'room_type' => 'required',
+            'price' => 'required',
+            'beds' => 'required',
+            'bed_count' => 'required',
+            'cover_photo' => 'mimes:jpg,png,jpeg,webp',
+            'description' => 'required',
+            'images.*' => 'mimes:jpg,png,jpeg,webp',
+            'services' => 'required',
+        ]);
+        $room = Room::find($id);
+        $coverPhoto = $room->cover_photo;
+        $imageNames = json_decode($room->images);
+        if($request->hasFile('cover_photo')){
+            if(File::exists(public_path().'/asset/images/'.$coverPhoto)){
+                File::delete(public_path().'/asset/images/'.$coverPhoto);
+            }
+            $coverPhoto = "cv".uniqid()."_".$request->file('cover_photo')->getClientOriginalName();
+            $request->file('cover_photo')->move(public_path('asset/images'),$coverPhoto);
+        }
+        if($request->hasFile('images')){
+            foreach($request->file('images') as $image){
+                $imageName = uniqid()."_".$image->getClientOriginalName();
+                array_push($imageNames, $imageName);
+                $image->move(public_path('asset/images'), $imageName);
+            }
+        }
+        $services = [];
+        foreach($request->services as $service){
+            array_push($services, $service);
+        }
+        $room = [
+            'title' => $request->title,
+            'room_number' => $request->room_number,
+            'room_type_id' => $request->room_type,
+            'price' => $request->price,
+            'beds' => $request->beds,
+            'bed_count' => $request->bed_count,
+            'description' => $request->description,
+            'cover_photo' => $coverPhoto,
+            'images' => json_encode($imageNames),
+            'services' => json_encode($services),
+            'status' => $request->status ? $request->status : 'Maintenance',
+        ];
+        Room::where('id', $id)->update($room);
+        dd($request->all());
+    }
 
 
 

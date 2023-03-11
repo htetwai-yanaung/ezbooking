@@ -12,6 +12,9 @@ class BookingController extends Controller
     public function booking(Request $request){
         $this->checkBookingValidation($request);
 
+        $screenshort = uniqid().'_'.$request->file('payment_ss')->getClientOriginalName();
+        $request->file('payment_ss')->move(public_path('asset/images/'),$screenshort);
+
         $guestData = [
             'first_name' => $request->guestFirstName,
             'last_name' => $request->guestLastName,
@@ -21,6 +24,7 @@ class BookingController extends Controller
             'address' => $request->guestAddress,
             'NRC' => $request->nrc,
             'passport' => $request->passport,
+            'payment_ss' => $screenshort,
         ];
         $guest = Guest::create($guestData);
 
@@ -61,6 +65,7 @@ class BookingController extends Controller
             'guestAddress' => $request->guestNationality == 'myanmar' ? 'required' : '',
             'passport' => $request->guestNationality == 'myanmar' ? '' : 'required',
             'nrc' =>  $request->guestNationality == 'myanmar' ?'required' : '',
+            'payment_ss' => 'required|mimes:jpg,png,jpeg',
         ]);
     }
 }

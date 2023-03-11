@@ -55,7 +55,7 @@
             <div class="col-md-12 col-lg-6 px-0">
 
                     <div class="row">
-                        @for ($i=1;$i<=4;$i++)
+                        @for ($i=0;$i<4;$i++)
                         <div class="col-3 col-md-3 col-lg-6 px-0" id="side-img">
                             <img src="{{ url('asset/images/'.$images[$i]) }}" alt="...">
                         </div>
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <div class="container mt-4">
+    {{-- <div class="container mt-4">
         <div class="row">
             <div class="col-md-12 col-lg-6">
                 <div class="content h-100 d-flex flex-column justify-content-between">
@@ -76,14 +76,14 @@
                     <div class="container">
                         <div class="row my-2">
                             @foreach ($services as $service)
-                                <div class="col-4 p-0"><i class="uil uil-check-circle text-success"></i> {{ $service }}</div>
+                                <div class="col-6 col-sm-4 p-0"><i class="uil uil-check-circle text-success"></i> {{ $service }}</div>
                             @endforeach
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="container-sm px-sm-1" style="margin: 50px auto;">
         <div class="row">
@@ -211,9 +211,21 @@
                 </form>
             </div> --}}
         </div>
-        <form action="{{ route('booking') }}" method="POST" class="row">
+        <form action="{{ route('booking') }}" method="POST" class="row" enctype="multipart/form-data">
             <div class="col-12 col-md-6 mb-3">
-                <div class="rounded-3 shadow bg-white p-3 pt-0">
+                <div class="rounded-3 shadow-sm bg-white p-3 pt-0">
+                    <div class="content h-100 d-flex flex-column justify-content-between">
+                        <h5>${{ $room->price }}/Night</h5>
+                        <h3>{{ $room->title }}</h3>
+                        <p>{{ $room->description }}</p>
+                        <div class="container">
+                            <div class="row my-2">
+                                @foreach ($services as $service)
+                                    <div class="col-6 col-sm-4 p-0"><i class="uil uil-check-circle text-success"></i> {{ $service }}</div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                     <h3 class="text-center p-3">Booking</h3>
                     <input type="hidden" name="room_id" value="{{ $room->id }}">
                     @csrf
@@ -293,7 +305,7 @@
                 </div>
             </div>
             <div class="col-12 col-md-6">
-                <div class="rounded-3 shadow bg-white p-3 pt-0">
+                <div class="rounded-3 shadow-sm bg-white p-3 pt-0">
                     <h3 class="text-center p-3">Guest</h3>
                     <div class="row mb-4">
                         <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
@@ -359,6 +371,58 @@
                             <label for="" class="h5">Passport</label>
                             <input type="text" class="form-control" name="passport" placeholder="your passport">
                             @error('passport')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <label for="" class="h5">Payment</label>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Bank</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Mobile</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-4 col-sm-4 col-md-3">AYA Bank</div>
+                                            <div class="col">1234 56789 012345</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4 col-sm-4 col-md-3">KBZ Bank</div>
+                                            <div class="col">1234 56789 012345</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4 col-sm-4 col-md-3">YOMA Bank</div>
+                                            <div class="col">1234 56789 012345</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-4 col-sm-4 col-md-3">AYA Pay</div>
+                                            <div class="col">09123456789</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4 col-sm-4 col-md-3">KBZ Pay</div>
+                                            <div class="col">09789012345</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <label for="payment_ss" class="btn btn-outline-primary">Upload your screenshort</label>
+                            <input type="file" name="payment_ss" id="payment_ss" class="d-none">
+                            @error('payment_ss')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

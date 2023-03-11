@@ -139,13 +139,13 @@
 }
 .calendar .date{
     display: block;
-    background-color: #f7f7f7;
+    background-color: #fff;
     height: 100px;
     padding: 10px;
     position: relative;
 }
 .calendar .date:hover{
-    background-color: #fff;
+    background-color: #f8f8f8f8;
 }
 .calendar .date .name-tag{
     display: inline-block;
@@ -169,7 +169,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 1rem 0;
 }
 .cbtn{
     outline: none;

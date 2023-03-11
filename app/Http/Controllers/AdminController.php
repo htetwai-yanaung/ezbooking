@@ -6,6 +6,7 @@ use App\Models\Room;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\RoomType;
+use App\Models\FreeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,20 +34,20 @@ class AdminController extends Controller
     public function dashboard(){
         $bookings = Booking::all();
         $checkInes = Booking::select('check_in as checkIn')->get()->toArray();
-        $checkIn_array = [];
-        $checkIn_user_name_array = [];
-        foreach($checkInes as $checkIn){
-            array_push($checkIn_array, $checkIn['checkIn']);
-        }
-        $checkIn_array = json_encode($checkIn_array);
-        foreach($bookings as $booking){
-            $guest_id = $booking->guest_id;
-            $user = User::find($guest_id);
+        // $checkIn_array = [];
+        // $checkIn_user_name_array = [];
+        // foreach($checkInes as $checkIn){
+        //     array_push($checkIn_array, $checkIn['checkIn']);
+        // }
+        // $checkIn_array = json_encode($checkIn_array);
+        // foreach($bookings as $booking){
+        //     $guest_id = $booking->guest_id;
+        //     $user = User::find($guest_id);
 
-            array_push($checkIn_user_name_array, $user->name);
-        }
+        //     array_push($checkIn_user_name_array, $user->name);
+        // }
         // return $checkIn_user_name_array;
-        return view('admin.booking.index')->with(['checkInes' => $checkIn_array, 'checkInUserNames' => $checkIn_user_name_array]);
+        return view('admin.booking.index');
     }
 
     //room index
@@ -58,8 +59,10 @@ class AdminController extends Controller
     //room create
     public function roomCreate(){
         $roomTypes = RoomType::get();
+        $services = FreeService::get();
         return view('admin.rooms.create')->with([
-            'roomTypes' => $roomTypes
+            'roomTypes' => $roomTypes,
+            'services' => $services,
         ]);
     }
 
@@ -77,8 +80,14 @@ class AdminController extends Controller
             $image->move(public_path('asset/images'), $imageName);
         }
 
+        $services = [];
+        foreach($request->services as $service){
+            array_push($services, $service);
+        }
+
         $room = [
-            'name' => $request->name,
+            'title' => $request->title,
+            'room_number' => $request->room_number,
             'room_type_id' => $request->room_type,
             'price' => $request->price,
             'beds' => $request->beds,
@@ -86,6 +95,7 @@ class AdminController extends Controller
             'description' => $request->description,
             'cover_photo' => $coverPhoto,
             'images' => json_encode($imageNames),
+            'services' => json_encode($services),
             'status' => $request->status ? $request->status : 'Maintenance',
         ];
 
@@ -107,7 +117,8 @@ class AdminController extends Controller
 
     private function checkRoomValidation($request){
         $request->validate([
-            'name' => 'required',
+            'title' => 'required',
+            'room_number' => 'required',
             'room_type' => 'required',
             'price' => 'required',
             'beds' => 'required',
@@ -116,6 +127,7 @@ class AdminController extends Controller
             'description' => 'required',
             'images' => 'required',
             'images.*' => 'mimes:jpg,png,jpeg,webp',
+            'services' => 'required',
         ]);
     }
 }

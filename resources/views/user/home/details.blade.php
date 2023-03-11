@@ -3,43 +3,83 @@
 @section('content')
 <section class="mb-b">
 
-    <div class="container">
-        <div class="row shadow rounded overflow-hidden p-3">
-            <div class="col-md-12 col-lg-6 px-0">
+    {{-- <div class="container">
+        <div class="row shadow rounded overflow-hidden">
+            <div class="col-md-12 col-lg-6 bg-light">
                 <div class="content h-100 d-flex flex-column justify-content-between">
                     <h5>${{ $room->price }}/Night</h5>
-                    <h3>{{ $room->name }}</h3>
+                    <h3>{{ $room->title }}</h3>
                     <p>{{ $room->description }}</p>
                     <div class="container">
                         <div class="row my-2">
-                            <div class="col p-0"><i class="fa-solid fa-users"></i> 1-3 persons</div>
-                            <div class="col p-0"><i class="fa-solid fa-bed"></i> Triple Bed</div>
-                            <div class="col p-0"><i class="fa-solid fa-couch"></i> 200 sqft room</div>
-                        </div>
-                        <div class="row my-2">
-                            <div class="col-4 p-0"><i class="fa-solid fa-wifi"></i> Free Wifi</div>
-                            <div class="col-4 p-0"><i class="fa-solid fa-bath"></i> 1 Bath</div>
+                            @foreach ($services as $service)
+                                <div class="col-4 p-0"><i class="uil uil-check-circle text-success"></i> {{ $service }}</div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-12 col-lg-6 px-0">
-                <div id="carouselExample" class="carousel slide">
-                    <div class="carousel-inner">
+                <div class="swiper mySwiper bg-light"  style="height: 400px">
+                    <div class="swiper-wrapper">
                         @foreach ($images as $key=>$image)
-                            <div class="carousel-item @if($key == 0) active @endif" style="height: 300px;">
-                                <img src="{{ url('asset/images/'.$image) }}" class="d-block w-100 h-100 mx-auto object-fit-cover" alt="...">
-                            </div>
+                        <div class="swiper-slide">
+                            <img src="{{ url('asset/images/'.$image) }}" class="d-block w-100 h-100 mx-auto object-fit-cover" alt="...">
+                        </div>
                         @endforeach
                     </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+    <div class="container">
+        <div class="row shadow rounded overflow-hidden">
+            <div class="col-md-12 col-lg-6 px-0">
+                <div class="swiper mySwiper bg-light"  style="height: 400px">
+                    <div class="swiper-wrapper">
+                        @foreach ($images as $key=>$image)
+                        <div class="swiper-slide">
+                            <img src="{{ url('asset/images/'.$image) }}" class="d-block w-100 h-100 mx-auto object-fit-cover" alt="...">
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6 px-0">
+
+                    <div class="row">
+                        @for ($i=1;$i<=4;$i++)
+                        <div class="col-3 col-md-6 px-0" id="side-img">
+                            <img src="{{ url('asset/images/'.$images[$i]) }}" alt="...">
+                        </div>
+                        @endfor
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <div class="content h-100 d-flex flex-column justify-content-between">
+                    <h5>${{ $room->price }}/Night</h5>
+                    <h3>{{ $room->title }}</h3>
+                    <p>{{ $room->description }}</p>
+                    <div class="container">
+                        <div class="row my-2">
+                            @foreach ($services as $service)
+                                <div class="col-4 p-0"><i class="uil uil-check-circle text-success"></i> {{ $service }}</div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -209,7 +249,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="row mb-4">
+                    {{-- <div class="row mb-4">
                         <div class="col-6">
                             <label class="h5" for="">Services</label>
                             <select name="wifi" id="services" class="form-select">
@@ -219,24 +259,16 @@
                                 <option value="3">Vip - $50/day</option>
                             </select>
                         </div>
-                        {{-- <div class="col">
-                            <label class="h5" for="">Services</label>
-                            <select name="services" class="form-select">
-                                <option value="">Choose service</option>
-                                <option value="">Choose service</option>
-                                <option value="">Choose service</option>
-                                <option value="">Choose service</option>
-                            </select>
-                        </div> --}}
-                    </div>
+                    </div> --}}
                     <div class="row mb-4">
-                        <div class="col-12">
+                        <label class="h5" for="">Services</label>
+                        {{-- <div class="col-12">
                             <div class="form-check border-bottom py-2">
                                 <input class="form-check-input" name="ext_services[]" type="checkbox" value="breakfast" id="breakfast">
                                 <label class="form-check-label" for="breakfast">Breakfast</label>
                                 <label class="form-check-label float-end">$30 / Day</label>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-12">
                             <div class="form-check border-bottom py-2">
                                 <input class="form-check-input" name="ext_services[]" type="checkbox" value="dinner" id="dinner">
@@ -265,16 +297,16 @@
                     <h3 class="text-center p-3">Guest</h3>
                     <div class="row mb-4">
                         <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
-                            <label class="h5" for="">Name</label>
-                            <input type="text" name="guestName" class="form-control" placeholder="Enter your full name">
-                            @error('guestName')
+                            <label class="h5" for="">First Name</label>
+                            <input type="text" name="guestFirstName" class="form-control" placeholder="Enter your first name">
+                            @error('guestFirstName')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col-md-12 col-lg-6">
-                            <label class="h5" for="">Email</label>
-                            <input type="email" name="guestEmail" class="form-control" placeholder="Enter your email">
-                            @error('guestEmail')
+                            <label class="h5" for="">Last Name</label>
+                            <input type="text" name="guestLastName" class="form-control" placeholder="Enter your last name">
+                            @error('guestLastName')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -288,9 +320,45 @@
                             @enderror
                         </div>
                         <div class="col-md-12 col-lg-6">
+                            <label class="h5" for="">Email</label>
+                            <input type="email" name="guestEmail" class="form-control" placeholder="Enter your email">
+                            @error('guestEmail')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
                             <label class="h5" for="">Nationality</label>
-                            <input type="text" name="guestNationality" class="form-control" placeholder="Eg: Myanmar">
+                            <select name="guestNationality" id="nationality" class="form-select">
+                                <option value="" class="d-none">Country</option>
+                                <option value="myanmar" selected>Myanmar</option>
+                                <option value="foreign">Foreign</option>
+                            </select>
                             @error('guestNationality')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-md-12 col-lg-6" id="address">
+                            <label class="h5" for="">Address</label>
+                            <input type="text" name="guestAddress" class="form-control" placeholder="Enter your address">
+                            @error('guestAddress')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col" id="NRC">
+                            <label for="" class="h5">NRC Number</label>
+                            <input type="text" class="form-control" name="nrc" placeholder="eg: 12/MaGaTa(N)123456">
+                            @error('nrc')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col" id="Passport">
+                            <label for="" class="h5">Passport</label>
+                            <input type="text" class="form-control" name="passport" placeholder="your passport">
+                            @error('passport')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -342,7 +410,51 @@
 
 @section('scriptSource')
 <script>
+    var swiper = new Swiper(".mySwiper", {
+    //   slidesPerView: 4,
+    //   spaceBetween: 30,
+    //   pagination: {
+    //     el: ".swiper-pagination",
+    //     clickable: true,
+    //   },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+</script>
+<script>
     $(document).ready(function() {
+
+        $nationality = localStorage.getItem('nationality');
+        $('#Passport').hide();
+            if($nationality == 'myanmar'){
+                $('#nationality option[value="myanmar"]').prop('selected', true);
+                $('#NRC').show();
+                $('#address').show();
+                $('#Passport').hide();
+            }
+            if($nationality == 'foreign'){
+                $('#nationality option[value="foreign"]').prop('selected', true);
+                $('#NRC').hide();
+                $('#address').hide();
+                $('#Passport').show();
+            }
+
+        $('#nationality').change(function(e) {
+            if(e.target.value == 'myanmar'){
+                $('#NRC').show();
+                $('#address').show();
+                $('#Passport').hide();
+                localStorage.setItem('nationality', 'myanmar');
+            }else{
+                $('#NRC').hide();
+                $('#address').hide();
+                $('#Passport').show();
+                localStorage.setItem('nationality', 'foreign');
+            }
+        })
+
         $originalPrice = <?php echo $room->price ?>;
         $servicePrice = 0;
 

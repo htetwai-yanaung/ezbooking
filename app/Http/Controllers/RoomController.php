@@ -17,6 +17,7 @@ class RoomController extends Controller
     public function details($id){
         $room = Room::find($id);
         $images = json_decode($room->images);
-        return view('user.home.details')->with(['room' => $room, 'images' => $images]);
+        $services = json_decode($room->services);
+        return view('user.home.details')->with(['room' => $room, 'images' => $images, 'services' => $services]);
     }
 }

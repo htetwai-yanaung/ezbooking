@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\RoomType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Database\Seeders\FreeServiceSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -52,11 +53,15 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
-        $roomTypes = ['Single Room','Double Room','Triple Room','Queen Room','King Room','Standard Room','Deluxe Room','Suite Room'];
+        $roomTypes = ['Single Room','Double Room','Triple Room','Suite Room'];
         foreach($roomTypes as $roomType){
             RoomType::create([
                 'name' => $roomType
             ]);
         }
+
+        $this->call([
+            FreeServiceSeeder::class,
+        ]);
     }
 }

@@ -2,10 +2,12 @@
 
 @section('content')
 <section>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a href="{{ route('dashboard') }}" class="btn btn-outline-primary">Calendar View</a>
+        <a href="{{ route('booking.list') }}" class="btn btn-outline-primary">List View</a>
+    </div>
     <article class="calendar">
         <div class="calendar-header">
-            <?php $checkIn = $checkInes ?>
-            <?php $userNames = $checkInUserNames ?>
             <h3></h3>
             <div>
                 <button class="cbtn" id="prev"><i class="uil uil-angle-left"></i></button>
@@ -57,15 +59,15 @@
         document.querySelector('#dates').innerHTML = list;
 
         /*start*/
-        var checkInes_array = <?php echo $checkIn; ?>;
-        var userNames = <?php echo json_encode($userNames); ?>;
-        for(var i=0; i<checkInes_array.length; i++){
-            var checkIn_date = checkInes_array[i].split('-');
-            var cdate = checkIn_date[2]*1;
-            if(currentMonth == checkIn_date[1]*1 - 1){
-                document.getElementById(cdate).innerHTML += `<span class="name-tag success">${userNames[i]}</span>`;
-            }
-        }
+        // var checkInes_array = ;
+        // var userNames = ;
+        // for(var i=0; i<checkInes_array.length; i++){
+        //     var checkIn_date = checkInes_array[i].split('-');
+        //     var cdate = checkIn_date[2]*1;
+        //     if(currentMonth == checkIn_date[1]*1 - 1){
+        //         document.getElementById(cdate).innerHTML += `<span class="name-tag success">${userNames[i]}</span>`;
+        //     }
+        // }
         /*end*/
 
         // if(currentMonth == new Date().getMonth()){

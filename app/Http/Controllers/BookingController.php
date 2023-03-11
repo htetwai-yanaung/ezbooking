@@ -13,10 +13,14 @@ class BookingController extends Controller
         $this->checkBookingValidation($request);
 
         $guestData = [
-            'name' => $request->guestName,
+            'first_name' => $request->guestFirstName,
+            'last_name' => $request->guestLastName,
             'email' => $request->guestEmail,
             'phone' => $request->guestPhone,
             'nationality' => $request->guestNationality,
+            'address' => $request->guestAddress,
+            'NRC' => $request->nrc,
+            'passport' => $request->passport,
         ];
         $guest = Guest::create($guestData);
 
@@ -27,12 +31,20 @@ class BookingController extends Controller
             'check_out' => $request->check_out,
             'adult' => $request->adult,
             'child' => $request->child,
-            'wifi' => $request->wifi,
             'ext_services' => json_encode($request->ext_services),
             'price' => $request->price,
         ];
         Booking::create($book);
         return redirect()->route('room.index')->with(['success' => 'Booking Success']);
+    }
+
+    //list view
+    public function listView(){
+        $booking_list = Booking::with('guest', 'room', 'room.roomType')->get();
+        // return $booking_list;
+        return view('admin.booking.listView')->with([
+            'booking_list' => $booking_list
+        ]);
     }
 
     private function checkBookingValidation($request){
@@ -41,10 +53,14 @@ class BookingController extends Controller
             'check_out' => 'required',
             'adult' => 'required',
             'child' => 'required',
-            'guestName' => 'required',
+            'guestFirstName' => 'required',
+            'guestLastName' => 'required',
             'guestPhone' => 'required',
             'guestEmail' => 'required',
             'guestNationality' => 'required',
+            'guestAddress' => $request->guestNationality == 'myanmar' ? 'required' : '',
+            'passport' => $request->guestNationality == 'myanmar' ? '' : 'required',
+            'nrc' =>  $request->guestNationality == 'myanmar' ?'required' : '',
         ]);
     }
 }

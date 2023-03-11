@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('check_out', 10);
             $table->tinyInteger('adult');
             $table->tinyInteger('child')->nullable();
-            $table->tinyInteger('wifi')->nullable();
             $table->string('ext_services')->nullable();
             $table->integer('price');
             $table->timestamps();

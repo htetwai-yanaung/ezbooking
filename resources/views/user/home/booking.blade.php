@@ -49,13 +49,10 @@
                         <h4 class="card-title">{{ $room->name }}</h4>
                         <span class="fw-bold"><span class="fs-4 text-primary">${{ $room->price }}</span>/Night</span>
                         <p class="card-text mt-2">{{ Str::substr($room->description, 0, 100) }} ...</p>
-                        <div class="">
-                            <ul>
-                                <li>Free wifi</li>
-                                <li>{{ $room->bed_count }}-{{ $room->beds }}</li>
-                                <li>200 sqft room</li>
-                                <li>1-Bathroom</li>
-                            </ul>
+                        <div class="mb-2">
+                            @foreach (json_decode($room->services) as $service)
+                                <span class="d-block"><i class="uil uil-check-circle text-success"></i> {{ $service }}</span>
+                            @endforeach
                         </div>
                         <a href="{{ route('room.details',$room->id) }}" class="btn btn-primary">Book Now</a>
                       </div>
@@ -67,3 +64,4 @@
         {{-- design --}}
     </section>
 @endsection
+

@@ -1,40 +1,46 @@
 @extends('admin.layouts.app')
 
 @section('content')
+    <section>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="{{ route('dashboard') }}" class="btn btn-outline-primary">Calendar View</a>
+            <a href="{{ route('booking.list') }}" class="btn btn-outline-primary">List View</a>
+        </div>
     <!-- table start -->
-    <div class="">
+    <div class="mt-3">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <h4 class="text-muted">Room list</h4>
+            <h4 class="text-muted">Booking list</h4>
             <a href="{{ route('dashboard.roomCreate') }}" class="btn btn-primary">Create</a>
         </div>
         <table class="table table-bordered bg-white">
             <thead>
                 <tr>
                     <th scope="col">No.</th>
+                    <th scope="col">Guest Name</th>
                     <th scope="col">Room Number</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Beds</th>
+                    <th scope="col">Check In</th>
+                    <th scope="col">Check Out</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">Phone</th>
                     <th scope="col" class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($rooms as $room)
+                @foreach ($booking_list as $booking)
                 <tr>
-                    <td class="align-middle" scope="row">{{ $room->id }}</td>
-                    <td class="align-middle">{{ $room->room_number }}</td>
-                    <td class="align-middle">{{ $room->title }}</td>
-                    <td class="align-middle">{{ $room->roomType->name }}</td>
-                    <td class="align-middle">{{ $room->beds }}, {{ $room->bed_count }}</td>
-                    <td class="align-middle">${{ $room->price }}</td>
-                    <td class="align-middle">
+                    <td class="align-middle" scope="row">{{ $booking->id }}</td>
+                    <td class="align-middle">{{ $booking->guest->first_name ." ".$booking->guest->first_name}}</td>
+                    <td class="align-middle">{{ $booking->room->room_number }}</td>
+                    <td class="align-middle">{{ $booking->check_in }}</td>
+                    <td class="align-middle">{{ $booking->check_out }}</td>
+                    <td class="align-middle">${{ $booking->price }}</td>
+                    <td class="align-middle">{{ $booking->guest->phone }}</td>
+                    {{-- <td class="align-middle">
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="status" @if($room->status == 'Available') checked @endif type="checkbox" role="switch" id="status">
                             <label class="form-check-label" for="status">{{ $room->status == 'Available' ? 'Available' : 'Maintenance' }}</label>
                         </div>
-                    </td>
+                    </td> --}}
                     <td class="text-center">
                         <a href="" class="action edit"><i class="fa-solid fa-pen"></i></a>
                         <a href="" class="action delete"><i class="fa-solid fa-trash"></i></a>
@@ -45,4 +51,5 @@
         </table>
     </div>
     <!-- table end -->
+    </section>
 @endsection

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
+            $table->string('room_number');
             $table->foreignId('room_type_id');
             $table->integer('price');
             $table->string('beds');
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('status', 30);
             $table->string('images');
+            $table->string('services');
             $table->timestamps();
         });
     }

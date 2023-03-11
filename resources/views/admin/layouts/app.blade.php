@@ -22,13 +22,14 @@
                 <span id="close-nav"><i class="fa-solid fa-close"></i></span>
             </div>
             <div class="nav-item-container">
-                <a href="" class="active"><i class="uis uis-apps"></i><span class="nav-text">Bookings</span></a>
-                <a href="{{ route('dashboard.roomTypeIndex') }}" class=""><i class="fa-solid fa-user"></i><span class="nav-text">Room Types</span></a>
-                <a href="{{ route('dashboard.roomIndex') }}" class=""><i class="fa-solid fa-user"></i><span class="nav-text">Rooms</span></a>
-                <a href="" class=""><i class="fa-solid fa-user"></i><span class="nav-text">Message</span></a>
+                <a href="{{ route('dashboard') }}" class="@if(Route::currentRouteName() == 'dashboard' || Route::currentRouteName() == 'booking.list') active @endif"><i class="uis uis-apps"></i><span class="nav-text">Bookings</span></a>
+                <a href="{{ route('dashboard.roomTypeIndex') }}" class="@if(Route::currentRouteName() == 'dashboard.roomTypeIndex') active @endif"><i class="fa-solid fa-hotel"></i><span class="nav-text">Room Types</span></a>
+                <a href="{{ route('dashboard.roomIndex') }}" class="@if(Route::currentRouteName() == 'dashboard.roomIndex' || Route::currentRouteName() == 'dashboard.roomCreate') active @endif"><i class="fa-solid fa-bed"></i><span class="nav-text">Rooms</span></a>
+                <a href="{{ route('services.index') }}" class="@if(Route::currentRouteName() == 'services.index') active @endif"><i class="fa-solid fa-bed"></i><span class="nav-text">Services</span></a>
+                <a href="" class=""><i class="fa-solid fa-comment"></i><span class="nav-text">Message</span></a>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button><i class="fa-solid fa-user"></i><span class="nav-text">Logout</span></button>
+                    <button><i class="fa-solid fa-right-from-bracket"></i><span class="nav-text">Logout</span></button>
                 </form>
             </div>
         </div>
@@ -44,6 +45,7 @@
         </div>
     </div>
 </body>
+@yield('scriptSource')
 <script>
     const menuBar = document.querySelector('#menu-bar');
     const nav = document.querySelector('.side-nav');

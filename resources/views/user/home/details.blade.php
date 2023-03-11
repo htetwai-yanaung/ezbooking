@@ -56,7 +56,7 @@
 
                     <div class="row">
                         @for ($i=1;$i<=4;$i++)
-                        <div class="col-3 col-md-6 px-0" id="side-img">
+                        <div class="col-3 col-md-3 col-lg-6 px-0" id="side-img">
                             <img src="{{ url('asset/images/'.$images[$i]) }}" alt="...">
                         </div>
                         @endfor

@@ -4,10 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Guest;
 use App\Models\Booking;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
+
+    //guest account-create
+    public function guestAccountPage(){
+        return view('user.guest.create-account');
+    }
+
+    //user or guest
+    public function userOrGuest(){
+        $roomTypes = RoomType::get();
+        return view('user.home.user-or-guest')->with([
+            'roomTypes' => $roomTypes
+        ]);
+    }
+
     //book
     public function booking(Request $request){
         $this->checkBookingValidation($request);
@@ -24,6 +39,7 @@ class BookingController extends Controller
             'address' => $request->guestAddress,
             'NRC' => $request->nrc,
             'passport' => $request->passport,
+            'payment_method' => $request->payment_method,
             'payment_ss' => $screenshort,
         ];
         $guest = Guest::create($guestData);
@@ -65,6 +81,7 @@ class BookingController extends Controller
             'guestAddress' => $request->guestNationality == 'myanmar' ? 'required' : '',
             'passport' => $request->guestNationality == 'myanmar' ? '' : 'required',
             'nrc' =>  $request->guestNationality == 'myanmar' ?'required' : '',
+            'payment_method' => 'required',
             'payment_ss' => 'required|mimes:jpg,png,jpeg',
         ]);
     }

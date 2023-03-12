@@ -17,6 +17,8 @@ Route::prefix('rooms')->group(function() {
     Route::get('/index', [RoomController::class, 'index'])->name('room.index');
     Route::get('/details/{id}', [RoomController::class, 'details'])->name('room.details');
     Route::post('/booking', [BookingController::class, 'booking'])->name('booking');
+    Route::get('/check-in', [BookingController::class, 'guestAccountPage'])->name('guestAccountPage');
+    Route::get('/user-or-guest', [BookingController::class, 'userOrGuest'])->name('userOrGuest');
 });
 
 

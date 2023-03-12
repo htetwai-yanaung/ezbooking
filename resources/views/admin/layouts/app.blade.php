@@ -36,12 +36,6 @@
         <div class="main bg-light p-3">
             <span class="btn btn-outline-dark mb-2" id="menu-bar"><i class="fa-solid fa-bars"></i></span>
             @yield('content')
-
-
-
-
-
-
         </div>
     </div>
 </body>

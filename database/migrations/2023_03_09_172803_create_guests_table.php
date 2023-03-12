@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('NRC')->nullable();
             $table->string('passport')->nullable();
+            $table->string('payment_method', 10);
             $table->string('payment_ss');
             $table->timestamps();
         });

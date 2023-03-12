@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel</title>
+    <title>EZBooking</title>
     <link rel="stylesheet" href="{{ url('asset/css/home.css') }}">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -17,43 +17,8 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 </head>
 <body class="">
-<header>
-    {{-- <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-        <a href="#" class="logo text-decoration-none text-primary h4">EZBooking</a>
-        <div class="d-flex col-lg-3 col-sm-6">
-            <input type="text" name="" id="" class="form-control" placeholder="Search...">
-            <button class="btn btn-primary ms-2"><i class="fa-solid fa-search"></i></button>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-              <i class="fa-solid fa-user"></i>
-            </button>
-
-            @if (Auth::user())
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a href="" class="dropdown-item">Booking History</a></li>
-                <li><a href="" class="dropdown-item">Messages</a></li>
-                <li><a href="" class="dropdown-item">Wishlists</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="" class="dropdown-item">My account</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="" class="dropdown-item">Help</a></li>
-                <li>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class="dropdown-item ">Logout</button>
-                    </form>
-                </li>
-            </ul>
-            @else
-            <ul class="dropdown-menu dropdown-menu-lg-end">
-                <li><a href="{{ route('login') }}" class="dropdown-item">Login</a></li>
-                <li><a href="{{ route('register') }}" class="dropdown-item">Register</a></li>
-            </ul>
-            @endif
-        </div>
-    </div> --}}
-    <div class="container-fluid shadow-sm">
+<header class="bg-white border-bottom">
+    {{-- <div class="container-fluid shadow-sm">
         <div class="row p-3">
             <div class="col-lg col-md col-12 mb-3 mb-md-0">
                 <a href="{{ route('room.index') }}" class="logo text-decoration-none text-primary h4">EZBooking</a>
@@ -63,6 +28,15 @@
                     <input type="text" name="" id="" class="form-control" placeholder="Search...">
                     <button class="btn btn-primary ms-2"><i class="fa-solid fa-search"></i></button>
                 </div>
+                <nav class="nav-bar">
+                    <div class="d-flex">
+                        @foreach ($roomTypes as $key=>$roomType)
+                        <a href="#" class="text-decoration-none text-muted active">
+                            </i><span>{{ $roomType->name }}</span>
+                        </a>
+                        @endforeach
+                    </div>
+                </nav>
             </div>
             <div class="col-lg col-md col">
                 <div class="btn-group float-end">
@@ -95,35 +69,45 @@
                 </div>
             </div>
         </div>
-    </div>
-    {{-- <nav class="nav-bar">
+    </div> --}}
+    <a href="{{ route('room.index') }}" class="logo text-decoration-none text-primary h4">EZBooking</a>
+    <nav class="nav-bar bg-white">
         <div class="d-flex">
-            <a href="#" class="text-decoration-none text-muted active">
-                <i class="fa-solid fa-water"></i><span>Lake View 1</span>
-            </a>
+            @foreach ($roomTypes as $key=>$roomType)
             <a href="#" class="text-decoration-none text-muted">
-                <i class="fa-solid fa-umbrella-beach"></i><span>Lake View 2</span>
+                </i><span>{{ $roomType->name }}</span>
             </a>
-            <a href="#" class="text-decoration-none text-muted">
-                <i class="fa-solid fa-cloud-sun"></i><span>2nd Row Lake View</span>
-            </a>
-            <a href="#" class="text-decoration-none text-muted">
-                <i class="fa-solid fa-tree"></i><span>3rd Row Lake View</span>
-            </a>
-            <a href="#" class="text-decoration-none text-muted">
-                <i class="fa-solid fa-mountain"></i><span>Mountain View</span>
-            </a>
-            <a href="#" class="text-decoration-none text-muted">
-                <i class="fa-solid fa-icicles"></i><span>Guide View</span>
-            </a>
-            <a href="#" class="text-decoration-none text-muted">
-                <i class="fa-solid fa-people-roof"></i><span>Guide Room</span>
-            </a>
-            <a href="#" class="text-decoration-none text-muted">
-                <i class="fa-solid fa-bed"></i><span>Extra Bed</span>
-            </a>
+            @endforeach
         </div>
-    </nav> --}}
+    </nav>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+          <i class="fa-solid fa-user"></i>
+        </button>
+
+        @if (Auth::user())
+        <ul class="dropdown-menu  dropdown-menu-end">
+            <li><a href="" class="dropdown-item">Booking History</a></li>
+            <li><a href="" class="dropdown-item">Messages</a></li>
+            <li><a href="" class="dropdown-item">Wishlists</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a href="" class="dropdown-item">My account</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a href="" class="dropdown-item">Help</a></li>
+            <li>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button class="dropdown-item ">Logout</button>
+                </form>
+            </li>
+        </ul>
+        @else
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a href="{{ route('login') }}" class="dropdown-item">Login</a></li>
+            <li><a href="{{ route('register') }}" class="dropdown-item">Register</a></li>
+        </ul>
+        @endif
+    </div>
 </header>
 
 @yield('content')

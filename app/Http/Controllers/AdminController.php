@@ -18,6 +18,22 @@ class AdminController extends Controller
         return view('login');
     }
 
+    //guest login
+    public function guestLoginPage(){
+        return view('guest_login');
+    }
+    public function guestLogin(Request $request){
+        $email = $request->email;
+        $user = User::where('email', $email)->first();
+        if($user){
+            Auth::login($user);
+            return redirect()->route('room.index');
+        }
+        else{
+            return back();
+        }
+    }
+
     //admin register
     public function register(){
         return view('register');
@@ -69,6 +85,7 @@ class AdminController extends Controller
 
     //room store
     public function roomStore(Request $request){
+        // dd($request->all());
         $this->checkRoomValidation($request);
 
         $coverPhoto = "cv".uniqid()."_".$request->file('cover_photo')->getClientOriginalName();
@@ -91,6 +108,8 @@ class AdminController extends Controller
             'room_number' => $request->room_number,
             'room_type_id' => $request->room_type,
             'price' => $request->price,
+            'usd' => $request->usd,
+            'discount' => $request->discount,
             'beds' => $request->beds,
             'bed_count' => $request->bed_count,
             'description' => $request->description,
@@ -126,6 +145,7 @@ class AdminController extends Controller
             'room_number' => 'required',
             'room_type' => 'required',
             'price' => 'required',
+            'usd' => 'required',
             'beds' => 'required',
             'bed_count' => 'required',
             'cover_photo' => 'mimes:jpg,png,jpeg,webp',
@@ -159,6 +179,8 @@ class AdminController extends Controller
             'room_number' => $request->room_number,
             'room_type_id' => $request->room_type,
             'price' => $request->price,
+            'usd' => $request->usd,
+            'discount' => $request->discount,
             'beds' => $request->beds,
             'bed_count' => $request->bed_count,
             'description' => $request->description,
@@ -168,7 +190,7 @@ class AdminController extends Controller
             'status' => $request->status ? $request->status : 'Maintenance',
         ];
         Room::where('id', $id)->update($room);
-        dd($request->all());
+        return redirect()->route('dashboard.roomIndex')->with(['success' => 'Room successfully updated.']);
     }
 
 
@@ -186,6 +208,7 @@ class AdminController extends Controller
             'room_number' => 'required',
             'room_type' => 'required',
             'price' => 'required',
+            'usd' => 'required',
             'beds' => 'required',
             'bed_count' => 'required',
             'cover_photo' => 'required|mimes:jpg,png,jpeg,webp',

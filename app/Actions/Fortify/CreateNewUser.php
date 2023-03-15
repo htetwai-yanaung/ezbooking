@@ -20,17 +20,27 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input): User
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => $this->passwordRules(),
+            'phone' => ['required'],
+            'nrc_number' => $input['nationality'] == 'Myanmar' ? 'required' : '',
+            'address' => $input['nationality'] == 'Myanmar' ? 'required' : '',
+            'passport' => $input['nationality'] == 'Foreign' ? 'required' : '',
+            'password' => $input['userOrGuest'] == 'User' ? $this->passwordRules(): '',
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
         return User::create([
-            'name' => $input['name'],
+            'first_name' => $input['first_name'],
+            'last_name' => $input['last_name'],
             'email' => $input['email'],
             'phone' => $input['phone'],
-            'role' => 'user',
+            'role' => $input['userOrGuest'],
+            'nationality' => $input['nationality'],
+            'nrc_number' => $input['nrc_number'],
+            'address' => $input['address'],
+            'passport' => $input['passport'],
             'password' => Hash::make($input['password']),
         ]);
     }

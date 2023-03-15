@@ -3,39 +3,6 @@
 @section('content')
 <section class="mb-b">
 
-    {{-- <div class="container">
-        <div class="row shadow rounded overflow-hidden">
-            <div class="col-md-12 col-lg-6 bg-light">
-                <div class="content h-100 d-flex flex-column justify-content-between">
-                    <h5>${{ $room->price }}/Night</h5>
-                    <h3>{{ $room->title }}</h3>
-                    <p>{{ $room->description }}</p>
-                    <div class="container">
-                        <div class="row my-2">
-                            @foreach ($services as $service)
-                                <div class="col-4 p-0"><i class="uil uil-check-circle text-success"></i> {{ $service }}</div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 col-lg-6 px-0">
-                <div class="swiper mySwiper bg-light"  style="height: 400px">
-                    <div class="swiper-wrapper">
-                        @foreach ($images as $key=>$image)
-                        <div class="swiper-slide">
-                            <img src="{{ url('asset/images/'.$image) }}" class="d-block w-100 h-100 mx-auto object-fit-cover" alt="...">
-                        </div>
-                        @endforeach
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
     <div class="container">
         <div class="row shadow rounded overflow-hidden">
             <div class="col-md-12 col-lg-6 px-0">
@@ -65,25 +32,6 @@
             </div>
         </div>
     </div>
-
-    {{-- <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-12 col-lg-6">
-                <div class="content h-100 d-flex flex-column justify-content-between">
-                    <h5>${{ $room->price }}/Night</h5>
-                    <h3>{{ $room->title }}</h3>
-                    <p>{{ $room->description }}</p>
-                    <div class="container">
-                        <div class="row my-2">
-                            @foreach ($services as $service)
-                                <div class="col-6 col-sm-4 p-0"><i class="uil uil-check-circle text-success"></i> {{ $service }}</div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -121,136 +69,20 @@
     </div>
 
     <div class="container-sm px-sm-1" style="margin: 50px auto;">
-        <div class="row">
-            {{-- <div class="col-12 col-md-6 mb-3">
-                <div class="px-3 bg-white shadow h-100 pb-2 rounded">
-                    <h3 class="text-center p-3">Information</h3>
-                    <div class="row">
-                        <div class="content">
-                            <h5>${{ $room->price }}/Night</h5>
-                            <h3>{{ $room->name }}</h3>
-                            <p>{{ $room->description }}</p>
-                            <div class="container mb-3 border-bottom pb-2">
-                                <div class="row my-2">
-                                    <div class="col p-0">1-3 persons</div>
-                                    <div class="col p-0">Triple Bed</div>
-                                    <div class="col p-0">200 sqft room</div>
-                                </div>
-                                <div class="row my-2">
-                                    <div class="col-4 p-0">Free Wifi</div>
-                                    <div class="col-4 p-0">1 Bath</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div id="carouselExample" class="carousel carousel-dark slide">
-                            <div class="carousel-inner">
-                            @foreach ($images as $key=>$image)
-                            <div class="carousel-item @if($key == 0) active @endif" style="height: 300px;">
-                                <img src="{{ url('asset/images/'.$image) }}" class="d-block h-100 mx-auto object-fit-contain" alt="...">
-                            </div>
-                            @endforeach
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-            {{-- <div class="col-12 col-md-6 mb-3">
-                <form action="{{ route('booking') }}" method="POST" class="px-3 bg-white shadow h-100 rounded">
-                    <h3 class="text-center p-3">Booking</h3>
-                    <input type="hidden" name="room_type_id" value="{{ $room->id }}">
-                    <input type="hidden" name="user_id" value="{{ Auth::check() ? Auth::user()->id : null }}">
-                    @csrf
-                    <div class="row mb-4">
-                        <div class="col">
-                            <label class="h5" for="">Check-in</label>
-                            <input type="date" name="check_in" class="form-control">
-                            @error('check_in')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col">
-                            <label class="h5" for="">Check-out</label>
-                            <input type="date" name="check_out" class="form-control">
-                            @error('check_out')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <label class="h5" for="">Adult</label>
-                            <input type="number" name="adult" value="1" class="form-control">
-                            @error('adult')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col">
-                            <label class="h5" for="">Children</label>
-                            <input type="number" name="child" value="0" class="form-control">
-                            @error('child')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-6">
-                            <label class="h5" for="">Services</label>
-                            <select name="wifi" id="services" class="form-select">
-                                <option value="">Wifi</option>
-                                <option value="1">Normal - $5/day</option>
-                                <option value="2">Strong - $10/day</option>
-                                <option value="3">Vip - $50/day</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <div class="form-check border-bottom py-2">
-                                <input class="form-check-input" name="ext_services[]" type="checkbox" value="breakfast" id="breakfast">
-                                <label class="form-check-label" for="breakfast">Breakfast</label>
-                                <label class="form-check-label float-end">$30 / Day</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-check border-bottom py-2">
-                                <input class="form-check-input" name="ext_services[]" type="checkbox" value="dinner" id="dinner">
-                                <label class="form-check-label" for="dinner">Dinner</label>
-                                <label class="form-check-label float-end">$40 / Day</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-check border-bottom py-2">
-                                <input class="form-check-input" name="ext_services[]" type="checkbox" value="driver" id="driver">
-                                <label class="form-check-label" for="driver">Driver</label>
-                                <label class="form-check-label float-end">$15 / Day</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <button class="btn btn-primary">Book Now</button>
-                            <span class="float-end align-middle fw-bold">Total $<span id="total">50</span></span>
-                        </div>
-                    </div>
-                </form>
-            </div> --}}
-        </div>
-        <form action="{{ route('booking') }}" method="post" enctype="multipart/form-data" class="row">
+        <form action="{{ route('bookingData', $room->id) }}" method="get" enctype="multipart/form-data" class="row">
             <div class="col-12 col-md-6 mb-3">
                 <div class="rounded-3 p-2 pt-0 mb-3">
                     <div class="content h-100 d-flex flex-column justify-content-between">
-                        <h5>${{ $room->price }}/Night</h5>
+
+                        @if (!Auth::check())
+                            <h5>{{ $room->price }} Kyats/Night</h5>
+                        @else
+                            <h5>@if (Auth::user()->nationality == 'Myanmar')
+                                {{ $room->price }} Kyats
+                            @else
+                                ${{ $room->usd }}
+                            @endif /Night</h5>
+                        @endif
                         <h3>{{ $room->title }}</h3>
                         <p>{{ $room->description }}</p>
                         <div class="container">
@@ -261,636 +93,264 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="container rounded-3 p-3 pt-0 mb-3 shadow">
                     <h3 class="text-center p-3">Booking</h3>
                     <input type="hidden" name="room_id" value="{{ $room->id }}" id="room_id">
+                    <input type="hidden" name="total_day" id="total_day">
                     @csrf
-                    <div class="row mb-4">
+                    <div class="row mb-3">
                         <div class="col">
-                            <label class="h5" for="">Check-in</label>
-                            <input type="date" name="check_in" id="checkIn" class="form-control">
+                            <label class="h6" for="">Check-in</label>
+                            <input type="date" name="check_in" id="checkIn" placeholder="Select date" class="form-control">
                             @error('check_in')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col">
-                            <label class="h5" for="">Check-out</label>
-                            <input type="date" name="check_out" id="checkOut" class="form-control">
+                            <label class="h6" for="">Check-out</label>
+                            <input type="date" name="check_out" placeholder="Select date" id="checkOut" class="form-control">
                             @error('check_out')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
-                    <div class="row mb-4">
+                    <div class="row mb-3">
                         <div class="col">
-                            <label class="h5" for="">Adult</label>
+                            <label class="h6" for="">Adult</label>
                             <input type="number" id="adult" name="adult" value="1" class="form-control">
                             @error('adult')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col">
-                            <label class="h5" for="">Children</label>
+                            <label class="h6" for="">Children</label>
                             <input type="number" id="child" name="child" value="0" class="form-control">
                             @error('child')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
-                    <div class="row mb-4">
-                        <label class="h5" for="">Services</label>
-                        {{-- <div class="col-12">
-                            <div class="form-check border-bottom py-2">
-                                <input class="form-check-input" name="ext_services[]" type="checkbox" value="breakfast" id="breakfast">
-                                <label class="form-check-label" for="breakfast">Breakfast</label>
-                                <label class="form-check-label float-end">$30 / Day</label>
-                            </div>
-                        </div> --}}
+                    <div class="row mb-3">
+                        <label class="h6" for="">Services</label>
+                        @foreach ($ext_services as $key=>$ext_service)
                         <div class="col-12">
                             <div class="form-check border-bottom py-2">
-                                <input class="form-check-input" name="ext_services[]" type="checkbox" value="dinner" id="dinner">
-                                <label class="form-check-label" for="dinner">Dinner</label>
-                                <label class="form-check-label float-end">$40 / Day</label>
+                                <input class="form-check-input" name="ext_services[]" type="checkbox" value="{{ $ext_service->id.','.$ext_service->price }}" id="{{ $key }}">
+                                {{-- <input class="form-check-input" name="ext_services_id[]" type="hidden" value="{{ $ext_service->id }}" id="{{ $key }}"> --}}
+                                <label class="form-check-label" for="{{ $key }}">{{ $ext_service->name }}</label>
+                                <label class="form-check-label float-end">{{ $ext_service->price }} kyats / Day</label>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="form-check border-bottom py-2">
-                                <input class="form-check-input" name="ext_services[]" type="checkbox" value="driver" id="driver">
-                                <label class="form-check-label" for="driver">Driver</label>
-                                <label class="form-check-label float-end">$15 / Day</label>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
-                    <div class="row mb-4">
+                    <div class="row mb-3">
                         <div class="col">
-                            <span class="float-end align-middle fw-bold">Total $<span id="total">{{ $room->price }}</span></span>
+                            <span class="align-middle fw-bold">Total</span>
+                            <span class="float-end align-middle fw-bold"> <span id="total">{{ $room->price }}</span> Kyats</span>
                             <input type="hidden" name="price" value="{{ $room->price }}" id="price">
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6">
-                <div class="rounded-3 shadow-sm bg-white p-3 pt-0">
-                    <h3 class="text-center p-3">Registeration</h3>
-                    <div class="row mb-4">
-                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
-                            <label class="h5" for="">First Name</label>
-                            <input type="text" name="guestFirstName" class="form-control" placeholder="Enter your first name">
-                            @error('guestFirstName')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-12 col-lg-6">
-                            <label class="h5" for="">Last Name</label>
-                            <input type="text" name="guestLastName" class="form-control" placeholder="Enter your last name">
-                            @error('guestLastName')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
-                            <label class="h5" for="">Phone Number</label>
-                            <input type="number" name="guestPhone" class="form-control" placeholder="Enter your phone number">
-                            @error('guestPhone')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-12 col-lg-6">
-                            <label class="h5" for="">Email</label>
-                            <input type="email" name="guestEmail" class="form-control" placeholder="Enter your email">
-                            @error('guestEmail')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
-                            <label class="h5" for="">Nationality</label>
-                            <select name="guestNationality" id="nationality" class="form-select">
-                                <option value="" class="d-none">Country</option>
-                                <option value="myanmar" selected>Myanmar</option>
-                                <option value="foreign">Foreign</option>
-                            </select>
-                            @error('guestNationality')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-12 col-lg-6" id="address">
-                            <label class="h5" for="">Address</label>
-                            <input type="text" name="guestAddress" class="form-control" placeholder="Enter your address">
-                            @error('guestAddress')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col" id="NRC">
-                            <label for="" class="h5">NRC Number</label>
-                            <input type="text" class="form-control" name="nrc" placeholder="eg: 12/MaGaTa(N)123456">
-                            @error('nrc')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col" id="Passport">
-                            <label for="" class="h5">Passport</label>
-                            <input type="text" class="form-control" name="passport" placeholder="your passport number">
-                            @error('passport')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <label for="" class="h5">Payment</label>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Mobile Pay</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Bank Account</button>
-                                </li>
-                            </ul>
-                            <div class="tab-content border border-top-0 rounded-bottom pt-2" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                                    <div class="container">
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="kbz_pay" data-bs-toggle="collapse" data-bs-target="#kbzpay" aria-expanded="false" aria-controls="kbzpay" name="payment_method" id="kbz">
-                                                <label for="kbz">KBZ Pay</label>
-                                            </div>
-                                            <div class="collapse" id="kbzpay">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="aya_pay" data-bs-toggle="collapse" data-bs-target="#ayapay" aria-expanded="false" aria-controls="ayapay" name="payment_method" id="aya">
-                                                <label for="aya">AYA Pay</label>
-                                            </div>
-                                            <div class="collapse" id="ayapay">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="wave_pay" data-bs-toggle="collapse" data-bs-target="#wavepay" aria-expanded="false" aria-controls="wavepay" name="payment_method" id="wave">
-                                                <label for="wave">WAVE Pay</label>
-                                            </div>
-                                            <div class="collapse" id="wavepay">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                                    <div class="container">
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="Kbz_bank" data-bs-toggle="collapse" data-bs-target="#kbz_bank" aria-expanded="false" aria-controls="kbz_bank" name="payment_method" id="kbzBank">
-                                                <label for="kbzBank">KBZ Bank</label>
-                                            </div>
-                                            <div class="collapse" id="kbz_bank">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="aya_bank" data-bs-toggle="collapse" data-bs-target="#aya_bank" aria-expanded="false" aria-controls="aya_bank" name="payment_method" id="ayaBank">
-                                                <label for="ayaBank">AYA Bank</label>
-                                            </div>
-                                            <div class="collapse" id="aya_bank">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="yoma_bank" data-bs-toggle="collapse" data-bs-target="#yona_bank" aria-expanded="false" aria-controls="yona_bank" name="payment_method" id="yonaBank">
-                                                <label for="yonaBank">YOMA Bank</label>
-                                            </div>
-                                            <div class="collapse" id="yona_bank">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @error('payment_method')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <label class="h5" for="">Upload Payment Screenshort</label>
-                        <div class="col-12 d-flex">
-                            <label for="payment_ss" class="bg-light rounded border" id="payment_photo_btn">+</label>
-                            <input type="file" name="payment_ss" id="payment_ss" class="d-none">
-                            <div class="border rounded payment-photo-container ms-1">
-                                <img src="" class="" data-bs-toggle="modal" data-bs-target="#exampleModal" id="payment_photo">
-                            </div>
-                            @error('payment_ss')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col">
+                            <button type="button" class="btn btn-outline-primary">Add to Card</button>
                             <button class="btn btn-primary float-end">Book Now</button>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
-        {{-- <form action="{{ route('booking') }}" method="post" enctype="multipart/form-data" class="row" id="registeration">
-            @csrf
-            <div class="col-12 col-md-6">
-                <div class="rounded-3 shadow-sm bg-white p-3 pt-0">
-                    <h3 class="text-center p-3">Registeration</h3>
-                    <div class="row mb-4">
-                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
-                            <label class="h5" for="">First Name</label>
-                            <input type="text" name="guestFirstName" class="form-control" placeholder="Enter your first name">
-                            @error('guestFirstName')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-12 col-lg-6">
-                            <label class="h5" for="">Last Name</label>
-                            <input type="text" name="guestLastName" class="form-control" placeholder="Enter your last name">
-                            @error('guestLastName')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
-                            <label class="h5" for="">Phone Number</label>
-                            <input type="number" name="guestPhone" class="form-control" placeholder="Enter your phone number">
-                            @error('guestPhone')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-12 col-lg-6">
-                            <label class="h5" for="">Email</label>
-                            <input type="email" name="guestEmail" class="form-control" placeholder="Enter your email">
-                            @error('guestEmail')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
-                            <label class="h5" for="">Nationality</label>
-                            <select name="guestNationality" id="nationality" class="form-select">
-                                <option value="" class="d-none">Country</option>
-                                <option value="myanmar" selected>Myanmar</option>
-                                <option value="foreign">Foreign</option>
-                            </select>
-                            @error('guestNationality')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-12 col-lg-6" id="address">
-                            <label class="h5" for="">Address</label>
-                            <input type="text" name="guestAddress" class="form-control" placeholder="Enter your address">
-                            @error('guestAddress')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col" id="NRC">
-                            <label for="" class="h5">NRC Number</label>
-                            <input type="text" class="form-control" name="nrc" placeholder="eg: 12/MaGaTa(N)123456">
-                            @error('nrc')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col" id="Passport">
-                            <label for="" class="h5">Passport</label>
-                            <input type="text" class="form-control" name="passport" placeholder="your passport number">
-                            @error('passport')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <label for="" class="h5">Payment</label>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Mobile Pay</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Bank Account</button>
-                                </li>
-                            </ul>
-                            <div class="tab-content border border-top-0 rounded-bottom pt-2" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                                    <div class="container">
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="kbz_pay" data-bs-toggle="collapse" data-bs-target="#kbzpay" aria-expanded="false" aria-controls="kbzpay" name="payment_method" id="kbz">
-                                                <label for="kbz">KBZ Pay</label>
-                                            </div>
-                                            <div class="collapse" id="kbzpay">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="aya_pay" data-bs-toggle="collapse" data-bs-target="#ayapay" aria-expanded="false" aria-controls="ayapay" name="payment_method" id="aya">
-                                                <label for="aya">AYA Pay</label>
-                                            </div>
-                                            <div class="collapse" id="ayapay">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="wave_pay" data-bs-toggle="collapse" data-bs-target="#wavepay" aria-expanded="false" aria-controls="wavepay" name="payment_method" id="wave">
-                                                <label for="wave">WAVE Pay</label>
-                                            </div>
-                                            <div class="collapse" id="wavepay">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                                    <div class="container">
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="Kbz_bank" data-bs-toggle="collapse" data-bs-target="#kbz_bank" aria-expanded="false" aria-controls="kbz_bank" name="payment_method" id="kbzBank">
-                                                <label for="kbzBank">KBZ Bank</label>
-                                            </div>
-                                            <div class="collapse" id="kbz_bank">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="aya_bank" data-bs-toggle="collapse" data-bs-target="#aya_bank" aria-expanded="false" aria-controls="aya_bank" name="payment_method" id="ayaBank">
-                                                <label for="ayaBank">AYA Bank</label>
-                                            </div>
-                                            <div class="collapse" id="aya_bank">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="yoma_bank" data-bs-toggle="collapse" data-bs-target="#yona_bank" aria-expanded="false" aria-controls="yona_bank" name="payment_method" id="yonaBank">
-                                                <label for="yonaBank">YOMA Bank</label>
-                                            </div>
-                                            <div class="collapse" id="yona_bank">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @error('payment_method')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <label class="h5" for="">Upload Payment Screenshort</label>
-                        <div class="col-12 d-flex">
-                            <label for="payment_ss" class="bg-light rounded border" id="payment_photo_btn">+</label>
-                            <input type="file" name="payment_ss" id="payment_ss" class="d-none">
-                            <div class="border rounded payment-photo-container ms-1">
-                                <img src="" class="" data-bs-toggle="modal" data-bs-target="#exampleModal" id="payment_photo">
-                            </div>
-                            @error('payment_ss')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-primary float-end">Book Now</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form> --}}
-        {{-- @if (Auth::check())
-        <form action="{{ route('booking') }}" method="post" class="row">
-            @csrf
-            <div class="col-12 col-md-6">
-                <div class="rounded-3 shadow-sm bg-white p-3 pt-0">
-                    <h3 class="text-center p-3">Registeration</h3>
-                    <div class="row mb-4">
-                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
-                            <label class="h5" for="">First Name</label>
-                            <input type="text" name="guestFirstName" class="form-control" placeholder="Enter your first name">
-                            @error('guestFirstName')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-12 col-lg-6">
-                            <label class="h5" for="">Last Name</label>
-                            <input type="text" name="guestLastName" class="form-control" placeholder="Enter your last name">
-                            @error('guestLastName')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
-                            <label class="h5" for="">Phone Number</label>
-                            <input type="number" name="guestPhone" class="form-control" placeholder="Enter your phone number">
-                            @error('guestPhone')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-12 col-lg-6">
-                            <label class="h5" for="">Email</label>
-                            <input type="email" name="guestEmail" class="form-control" placeholder="Enter your email">
-                            @error('guestEmail')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
-                            <label class="h5" for="">Nationality</label>
-                            <select name="guestNationality" id="nationality2" class="form-select">
-                                <option value="" class="d-none">Country</option>
-                                <option value="myanmar" selected>Myanmar</option>
-                                <option value="foreign">Foreign</option>
-                            </select>
-                            @error('guestNationality')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-12 col-lg-6" id="address2">
-                            <label class="h5" for="">Address</label>
-                            <input type="text" name="guestAddress" class="form-control" placeholder="Enter your address">
-                            @error('guestAddress')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col" id="NRC2">
-                            <label for="" class="h5">NRC Number</label>
-                            <input type="text" class="form-control" name="nrc" placeholder="eg: 12/MaGaTa(N)123456">
-                            @error('nrc')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col" id="Passport2">
-                            <label for="" class="h5">Passport</label>
-                            <input type="text" class="form-control" name="passport" placeholder="your passport number">
-                            @error('passport')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <label for="" class="h5">Payment</label>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Mobile Pay</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Bank Account</button>
-                                </li>
-                            </ul>
-                            <div class="tab-content border border-top-0 rounded-bottom pt-2" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                                    <div class="container">
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="kbz_pay" data-bs-toggle="collapse" data-bs-target="#kbzpay" aria-expanded="false" aria-controls="kbzpay" name="payment_method" id="kbz">
-                                                <label for="kbz">KBZ Pay</label>
-                                            </div>
-                                            <div class="collapse" id="kbzpay">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="aya_pay" data-bs-toggle="collapse" data-bs-target="#ayapay" aria-expanded="false" aria-controls="ayapay" name="payment_method" id="aya">
-                                                <label for="aya">AYA Pay</label>
-                                            </div>
-                                            <div class="collapse" id="ayapay">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="wave_pay" data-bs-toggle="collapse" data-bs-target="#wavepay" aria-expanded="false" aria-controls="wavepay" name="payment_method" id="wave">
-                                                <label for="wave">WAVE Pay</label>
-                                            </div>
-                                            <div class="collapse" id="wavepay">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                                    <div class="container">
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="Kbz_bank" data-bs-toggle="collapse" data-bs-target="#kbz_bank" aria-expanded="false" aria-controls="kbz_bank" name="payment_method" id="kbzBank">
-                                                <label for="kbzBank">KBZ Bank</label>
-                                            </div>
-                                            <div class="collapse" id="kbz_bank">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="aya_bank" data-bs-toggle="collapse" data-bs-target="#aya_bank" aria-expanded="false" aria-controls="aya_bank" name="payment_method" id="ayaBank">
-                                                <label for="ayaBank">AYA Bank</label>
-                                            </div>
-                                            <div class="collapse" id="aya_bank">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div>
-                                                <input type="radio" value="yoma_bank" data-bs-toggle="collapse" data-bs-target="#yona_bank" aria-expanded="false" aria-controls="yona_bank" name="payment_method" id="yonaBank">
-                                                <label for="yonaBank">YOMA Bank</label>
-                                            </div>
-                                            <div class="collapse" id="yona_bank">
-                                                <div class="card card-body">
-                                                    Admin: 09123456789
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @error('payment_method')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <label class="h5" for="">Upload Payment Screenshort</label>
-                        <div class="col-12 d-flex">
-                            <label for="payment_ss" class="bg-light rounded border" id="payment_photo_btn">+</label>
-                            <input type="file" name="payment_ss" id="payment_ss" class="d-none">
-                            <div class="border rounded payment-photo-container ms-1">
-                                <img src="" class="" data-bs-toggle="modal" data-bs-target="#exampleModal" id="payment_photo">
-                            </div>
-                            @error('payment_ss')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-primary float-end">Book Now</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        @endif --}}
     </div>
+
+
+    {{-- <div class="rounded-3 shadow-sm bg-white p-3 pt-0">
+        <h3 class="text-center p-3">Registeration</h3>
+        <div class="row mb-4">
+            <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
+                <label class="h5" for="">First Name</label>
+                <input type="text" name="guestFirstName" class="form-control" placeholder="Enter your first name">
+                @error('guestFirstName')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <label class="h5" for="">Last Name</label>
+                <input type="text" name="guestLastName" class="form-control" placeholder="Enter your last name">
+                @error('guestLastName')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
+                <label class="h5" for="">Phone Number</label>
+                <input type="number" name="guestPhone" class="form-control" placeholder="Enter your phone number">
+                @error('guestPhone')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <label class="h5" for="">Email</label>
+                <input type="email" name="guestEmail" class="form-control" placeholder="Enter your email">
+                @error('guestEmail')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-12 col-lg-6 mb-3 mb-lg-0">
+                <label class="h5" for="">Nationality</label>
+                <select name="guestNationality" id="nationality" class="form-select">
+                    <option value="" class="d-none">Country</option>
+                    <option value="myanmar" selected>Myanmar</option>
+                    <option value="foreign">Foreign</option>
+                </select>
+                @error('guestNationality')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-12 col-lg-6" id="address">
+                <label class="h5" for="">Address</label>
+                <input type="text" name="guestAddress" class="form-control" placeholder="Enter your address">
+                @error('guestAddress')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col" id="NRC">
+                <label for="" class="h5">NRC Number</label>
+                <input type="text" class="form-control" name="nrc" placeholder="eg: 12/MaGaTa(N)123456">
+                @error('nrc')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col" id="Passport">
+                <label for="" class="h5">Passport</label>
+                <input type="text" class="form-control" name="passport" placeholder="your passport number">
+                @error('passport')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+                <label for="" class="h5">Payment</label>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Mobile Pay</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Bank Account</button>
+                    </li>
+                </ul>
+                <div class="tab-content border border-top-0 rounded-bottom pt-2" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                        <div class="container">
+                            <div class="row mb-2">
+                                <div>
+                                    <input type="radio" value="kbz_pay" data-bs-toggle="collapse" data-bs-target="#kbzpay" aria-expanded="false" aria-controls="kbzpay" name="payment_method" id="kbz">
+                                    <label for="kbz">KBZ Pay</label>
+                                </div>
+                                <div class="collapse" id="kbzpay">
+                                    <div class="card card-body">
+                                        Admin: 09123456789
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div>
+                                    <input type="radio" value="aya_pay" data-bs-toggle="collapse" data-bs-target="#ayapay" aria-expanded="false" aria-controls="ayapay" name="payment_method" id="aya">
+                                    <label for="aya">AYA Pay</label>
+                                </div>
+                                <div class="collapse" id="ayapay">
+                                    <div class="card card-body">
+                                        Admin: 09123456789
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div>
+                                    <input type="radio" value="wave_pay" data-bs-toggle="collapse" data-bs-target="#wavepay" aria-expanded="false" aria-controls="wavepay" name="payment_method" id="wave">
+                                    <label for="wave">WAVE Pay</label>
+                                </div>
+                                <div class="collapse" id="wavepay">
+                                    <div class="card card-body">
+                                        Admin: 09123456789
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                        <div class="container">
+                            <div class="row mb-2">
+                                <div>
+                                    <input type="radio" value="Kbz_bank" data-bs-toggle="collapse" data-bs-target="#kbz_bank" aria-expanded="false" aria-controls="kbz_bank" name="payment_method" id="kbzBank">
+                                    <label for="kbzBank">KBZ Bank</label>
+                                </div>
+                                <div class="collapse" id="kbz_bank">
+                                    <div class="card card-body">
+                                        Admin: 09123456789
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div>
+                                    <input type="radio" value="aya_bank" data-bs-toggle="collapse" data-bs-target="#aya_bank" aria-expanded="false" aria-controls="aya_bank" name="payment_method" id="ayaBank">
+                                    <label for="ayaBank">AYA Bank</label>
+                                </div>
+                                <div class="collapse" id="aya_bank">
+                                    <div class="card card-body">
+                                        Admin: 09123456789
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div>
+                                    <input type="radio" value="yoma_bank" data-bs-toggle="collapse" data-bs-target="#yona_bank" aria-expanded="false" aria-controls="yona_bank" name="payment_method" id="yonaBank">
+                                    <label for="yonaBank">YOMA Bank</label>
+                                </div>
+                                <div class="collapse" id="yona_bank">
+                                    <div class="card card-body">
+                                        Admin: 09123456789
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @error('payment_method')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="row mb-4">
+            <label class="h5" for="">Upload Payment Screenshort</label>
+            <div class="col-12 d-flex">
+                <label for="payment_ss" class="bg-light rounded border" id="payment_photo_btn">+</label>
+                <input type="file" name="payment_ss" id="payment_ss" class="d-none">
+                <div class="border rounded payment-photo-container ms-1">
+                    <img src="" class="" data-bs-toggle="modal" data-bs-target="#exampleModal" id="payment_photo">
+                </div>
+                @error('payment_ss')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary float-end">Book Now</button>
+            </div>
+        </div>
+    </div> --}}
 </section>
 @endsection
 
 @section('scriptSource')
+<script src="{{ url('asset/js/room-details.js') }}"></script>
 <script>
     var swiper = new Swiper(".mySwiper", {
     //   slidesPerView: 4,
@@ -905,7 +365,7 @@
       },
     });
 </script>
-<script>
+{{-- <script>
     $(document).ready(function() {
 
         $('#registeration').hide();
@@ -1112,5 +572,5 @@
             localStorage.setItem('driver', $driver);
         }
     });
-</script>
+</script> --}}
 @endsection

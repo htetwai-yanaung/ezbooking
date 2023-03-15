@@ -11,11 +11,13 @@
             <thead>
                 <tr>
                     <th scope="col">No.</th>
-                    <th scope="col">Room Number</th>
+                    <th scope="col">Room No.</th>
                     <th scope="col">Title</th>
                     <th scope="col">Type</th>
                     <th scope="col">Beds</th>
-                    <th scope="col">Price</th>
+                    <th scope="col">Price(Kyat)</th>
+                    <th scope="col">USD</th>
+                    <th scope="col">Discount</th>
                     <th scope="col">Status</th>
                     <th scope="col" class="text-center">Action</th>
                 </tr>
@@ -28,13 +30,10 @@
                     <td class="align-middle">{{ $room->title }}</td>
                     <td class="align-middle">{{ $room->roomType->name }}</td>
                     <td class="align-middle">{{ $room->beds }}, {{ $room->bed_count }}</td>
-                    <td class="align-middle">${{ $room->price }}</td>
-                    <td class="align-middle">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="status" @if($room->status == 'Available') checked @endif type="checkbox" role="switch" id="status">
-                            <label class="form-check-label" for="status">{{ $room->status == 'Available' ? 'Available' : 'Maintenance' }}</label>
-                        </div>
-                    </td>
+                    <td class="align-middle">{{ $room->price }} Kyats</td>
+                    <td class="align-middle">${{ $room->usd }}</td>
+                    <td class="align-middle">${{ $room->discount }}%</td>
+                    <td class="align-middle">{{ $room->status }}</td>
                     <td class="text-center">
                         <a href="{{ route('dashboard.roomEdit', $room->id) }}" class="action edit"><i class="fa-solid fa-pen"></i></a>
                         <a href="" class="action delete"><i class="fa-solid fa-trash"></i></a>

@@ -33,7 +33,17 @@
             </div>
             <div class="col-12 col-sm-6 mb-2">
                 <label for="">Price</label>
-                <input type="number" name="price" value="{{ $room->price, old('price') }}" class="form-control" placeholder="price">
+                <div class="row">
+                    <div class="col-4">
+                        <input type="number" name="price" value="{{ $room->price, old('price') }}" class="form-control" placeholder="Kyat">
+                    </div>
+                    <div class="col-4">
+                        <input type="number" name="usd" value="{{ $room->usd, old('usd') }}" class="form-control" placeholder="USD">
+                    </div>
+                    <div class="col-4">
+                        <input type="number" name="discount" value="{{ $room->discount, old('discount') }}" class="form-control" placeholder="Discount">
+                    </div>
+                </div>
                 @error('price')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -114,9 +124,13 @@
             </div>
             <div class="col-6 mb-2">
                 <label>Status</label>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" name="status" value="Available" @checked($room->status == 'Available') type="checkbox" role="switch" id="status">
-                    <label class="form-check-label" for="status">Available</label>
+                <div class="form-check">
+                    <input class="form-check-input" name="status" value="Available" @checked($room->status == 'Available') type="radio" checked role="switch" id="available">
+                    <label class="form-check-label" for="available">Available</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" name="status" value="Maintenance" @checked($room->status == 'Maintenance') type="radio" role="switch" id="maintenance">
+                    <label class="form-check-label" for="maintenance">Maintenance</label>
                 </div>
             </div>
 

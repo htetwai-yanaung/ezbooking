@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('room_number');
             $table->foreignId('room_type_id');
             $table->integer('price');
+            $table->integer('usd');
+            $table->integer('discount')->nullable();
             $table->string('beds');
             $table->integer('bed_count');
             $table->string('cover_photo');

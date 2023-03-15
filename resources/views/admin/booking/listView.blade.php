@@ -15,7 +15,7 @@
             <thead>
                 <tr>
                     <th scope="col">No.</th>
-                    <th scope="col">Guest Name</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Room Number</th>
                     <th scope="col">Check In</th>
                     <th scope="col">Check Out</th>
@@ -28,12 +28,12 @@
                 @foreach ($booking_list as $booking)
                 <tr>
                     <td class="align-middle" scope="row">{{ $booking->id }}</td>
-                    <td class="align-middle">{{ $booking->guest->first_name ." ".$booking->guest->first_name}}</td>
+                    <td class="align-middle">{{ $booking->user->first_name ." ".$booking->user->last_name}}</td>
                     <td class="align-middle">{{ $booking->room->room_number }}</td>
                     <td class="align-middle">{{ $booking->check_in }}</td>
                     <td class="align-middle">{{ $booking->check_out }}</td>
-                    <td class="align-middle">${{ $booking->price }}</td>
-                    <td class="align-middle">{{ $booking->guest->phone }}</td>
+                    <td class="align-middle">{{ $booking->price }}</td>
+                    <td class="align-middle">{{ $booking->user->phone }}</td>
                     {{-- <td class="align-middle">
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="status" @if($room->status == 'Available') checked @endif type="checkbox" role="switch" id="status">
@@ -41,8 +41,7 @@
                         </div>
                     </td> --}}
                     <td class="text-center">
-                        <a href="" class="action edit"><i class="fa-solid fa-pen"></i></a>
-                        <a href="" class="action delete"><i class="fa-solid fa-trash"></i></a>
+                        <a href="{{ route('booking.details', $booking->id) }}" class="action edit"><i class="fa-solid fa-eye"></i></a>
                     </td>
                 </tr>
                 @endforeach

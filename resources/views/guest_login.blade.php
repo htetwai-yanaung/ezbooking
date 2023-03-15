@@ -17,9 +17,15 @@
     <div class="container" >
         <div class="row">
             <div class="col-lg-6 offset-lg-3 col-12 offset-0">
-                <form action="{{ route('login') }}" method="POST" class="container shadow-sm rounded p-3">
+                <form action="{{ route('guest.login') }}" method="POST" class="container shadow-sm rounded p-3">
                     @csrf
-                    <h3 class="text-center">Login</h3>
+                    <h3 class="text-center">Guest Login</h3>
+                    <div class="row my-4">
+                        <div class="col">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Enter name...">
+                        </div>
+                    </div>
                     <div class="row my-4">
                         <div class="col">
                             <label for="email">Email</label>
@@ -28,18 +34,7 @@
                     </div>
                     <div class="row my-4">
                         <div class="col">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" id="password" class="form-control" placeholder="Enter password...">
-                        </div>
-                    </div>
-                    <div class="row my-4">
-                        <div class="col">
                             Have no account? <a href="{{ route('register') }}" class="text-decoration-none">Register here</a>
-                        </div>
-                    </div>
-                    <div class="row my-4">
-                        <div class="col">
-                            Are you a guest? <a href="{{ route('guest.login') }}" class="text-decoration-none">Guest login</a>
                         </div>
                     </div>
                     <div class="row my-4">

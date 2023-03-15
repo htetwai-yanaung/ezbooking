@@ -11,12 +11,13 @@ use App\Http\Controllers\FreeServiceController;
 Route::redirect('/', 'rooms/index');
 
 Route::get('/login', [AdminController::class, 'login'])->name('login');
+Route::get('/guest-login', [AdminController::class, 'guestLoginPage'])->name('guest.loginPage');
+Route::post('/guest-login', [AdminController::class, 'guestLogin'])->name('guest.login');
 Route::get('/register', [AdminController::class, 'register'])->name('register');
 
 Route::prefix('rooms')->group(function() {
     Route::get('/index', [RoomController::class, 'index'])->name('room.index');
     Route::get('/details/{id}', [RoomController::class, 'details'])->name('room.details');
-    Route::post('/booking', [BookingController::class, 'booking'])->name('booking');
     Route::get('/check-in', [BookingController::class, 'guestAccountPage'])->name('guestAccountPage');
     Route::get('/user-or-guest', [BookingController::class, 'userOrGuest'])->name('userOrGuest');
 });
@@ -25,10 +26,14 @@ Route::prefix('rooms')->group(function() {
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/role', [AdminController::class, 'role'])->name('role');
+    Route::post('/booking', [BookingController::class, 'booking'])->name('booking');
+    Route::get('/booking-data/{id}', [BookingController::class, 'bookingData'])->name('bookingData');
+    Route::post('/confirm-booking', [BookingController::class, 'confirmBooking'])->name('confirmBooking');
     Route::middleware('adminMiddleware')->prefix('dashboard')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::prefix('booking')->group(function() {
             Route::get('/list', [BookingController::class, 'listView'])->name('booking.list');
+            Route::get('/details/{id}', [BookingController::class, 'details'])->name('booking.details');
         });
         Route::prefix('room')->group(function() {
             Route::get('/index', [AdminController::class, 'roomIndex'])->name('dashboard.roomIndex');

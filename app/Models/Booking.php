@@ -13,8 +13,8 @@ class Booking extends Model
 
     protected $guarded = [];
 
-    public function guest(){
-        return $this->hasOne(Guest::class, 'id', 'guest_id');
+    public function user(){
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function room(){

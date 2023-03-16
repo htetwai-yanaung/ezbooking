@@ -56,6 +56,7 @@ header{
 
 section{
     margin-top: 100px;
+    min-height: 90vh;
 }
 
 .hotel-link{
@@ -177,7 +178,7 @@ section{
 } */
 
 #side-img{
-    height: 200px;
+    height: 100px;
     overflow: hidden;
 }
 
@@ -212,9 +213,6 @@ section{
 
 
 @media (max-width: 992px){
-    h3{
-        color: red !important;
-    }
     .swiper{
         height: 300px !important;
     }
@@ -255,6 +253,6 @@ section{
         height: 200px !important;
     }
     #side-img{
-        height: 80px;
+        height: 50px;
     }
 }

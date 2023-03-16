@@ -85,7 +85,6 @@ class AdminController extends Controller
 
     //room store
     public function roomStore(Request $request){
-        // dd($request->all());
         $this->checkRoomValidation($request);
 
         $coverPhoto = "cv".uniqid()."_".$request->file('cover_photo')->getClientOriginalName();
@@ -96,11 +95,6 @@ class AdminController extends Controller
             $imageName = uniqid()."_".$image->getClientOriginalName();
             array_push($imageNames, $imageName);
             $image->move(public_path('asset/images'), $imageName);
-        }
-
-        $services = [];
-        foreach($request->services as $service){
-            array_push($services, $service);
         }
 
         $room = [
@@ -115,7 +109,7 @@ class AdminController extends Controller
             'description' => $request->description,
             'cover_photo' => $coverPhoto,
             'images' => json_encode($imageNames),
-            'services' => json_encode($services),
+            'services' => json_encode($request->services),
             'status' => $request->status ? $request->status : 'Maintenance',
         ];
 

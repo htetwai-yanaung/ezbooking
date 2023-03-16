@@ -58,6 +58,47 @@ class DatabaseSeeder extends Seeder
             ExtService::create($ext_service);
         }
 
+
+        $rooms = [
+            [
+                'title' => 'Lake View',
+                'room_number' => 1,
+                'description' => 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                                This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                                This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
+                'room_type_id' => 1,
+                'price' => 20000,
+                'usd' => 10,
+                'discount' => 0,
+                'beds' => 'Small bed',
+                'bed_count' => 1,
+                'cover_photo' => 'cv_default_01.jpg',
+                'status' => 'Available',
+                'images' => '["default_01.jpg","default_02.jpg","default_03.jpg","default_04.jpg"]',
+                'services' => '["2","1","4","3","6","5"]',
+            ],
+            [
+                'title' => 'Mountain View',
+                'room_number' => 2,
+                'description' => 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                                This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                                This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
+                'room_type_id' => 2,
+                'price' => 25000,
+                'usd' => 12,
+                'discount' => 0,
+                'beds' => 'Small bed',
+                'bed_count' => 2,
+                'cover_photo' => 'cv_default_02.jpg',
+                'status' => 'Available',
+                'images' => '["default_01.jpg","default_02.jpg","default_03.jpg","default_04.jpg"]',
+                'services' => '["1","2","3","6","5","4"]',
+            ]
+        ];
+        foreach($rooms as $room){
+            Room::create($room);
+        }
+
         $this->call([
             FreeServiceSeeder::class,
         ]);

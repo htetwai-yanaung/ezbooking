@@ -3,7 +3,7 @@
 @section('content')
 <section class="mb-b">
 
-    <div class="container">
+    {{-- <div class="container">
         <div class="row shadow rounded overflow-hidden">
             <div class="col-md-12 col-lg-6 px-0">
                 <div class="swiper mySwiper bg-light"  style="height: 400px">
@@ -20,18 +20,16 @@
                 </div>
             </div>
             <div class="col-md-12 col-lg-6 px-0">
-
-                    <div class="row">
-                        @for ($i=0;$i<4;$i++)
-                        <div class="col-3 col-md-3 col-lg-6 px-0" id="side-img">
-                            <img src="{{ url('asset/images/'.$images[$i]) }}" alt="...">
-                        </div>
-                        @endfor
+                <div class="row">
+                    @for ($i=0;$i<4;$i++)
+                    <div class="col-3 col-md-3 col-lg-6 px-0" id="side-img">
+                        <img src="{{ url('asset/images/'.$images[$i]) }}" alt="...">
                     </div>
-
+                    @endfor
+                </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -67,7 +65,7 @@
             </div>
         </div>
     </div>
-
+{{--
     <div class="container-sm px-sm-1" style="margin: 50px auto;">
         <form action="{{ route('bookingData', $room->id) }}" method="get" enctype="multipart/form-data" class="row">
             <div class="col-12 col-md-6 mb-3">
@@ -86,9 +84,15 @@
                         <h3>{{ $room->title }}</h3>
                         <p>{{ $room->description }}</p>
                         <div class="container">
-                            <div class="row my-2">
-                                @foreach ($services as $service)
-                                    <div class="col-6 col-md-6 col-lg-4 p-0"><i class="uil uil-check-circle text-success"></i> {{ $service }}</div>
+                            <div class="row">
+                                @foreach (json_decode($room->services) as $room_service)
+                                <div class="col-6 col-md-6 col-lg-4 p-0">
+                                    @foreach ($freeServices as $freeService)
+                                        @if ($freeService->id == $room_service)
+                                        <i class="uil uil-check-circle text-success"></i> {{ $freeService->name }}
+                                        @endif
+                                    @endforeach
+                                </div>
                                 @endforeach
                             </div>
                         </div>
@@ -96,72 +100,81 @@
                 </div>
             </div>
             <div class="col-12 col-md-6">
-                <div class="container rounded-3 p-3 pt-0 mb-3 shadow">
-                    <h3 class="text-center p-3">Booking</h3>
-                    <input type="hidden" name="room_id" value="{{ $room->id }}" id="room_id">
-                    <input type="hidden" name="total_day" id="total_day">
-                    @csrf
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="h6" for="">Check-in</label>
-                            <input type="date" name="check_in" id="checkIn" placeholder="Select date" class="form-control">
-                            @error('check_in')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col">
-                            <label class="h6" for="">Check-out</label>
-                            <input type="date" name="check_out" placeholder="Select date" id="checkOut" class="form-control">
-                            @error('check_out')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="h6" for="">Adult</label>
-                            <input type="number" id="adult" name="adult" value="1" class="form-control">
-                            @error('adult')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col">
-                            <label class="h6" for="">Children</label>
-                            <input type="number" id="child" name="child" value="0" class="form-control">
-                            @error('child')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="h6" for="">Services</label>
-                        @foreach ($ext_services as $key=>$ext_service)
-                        <div class="col-12">
-                            <div class="form-check border-bottom py-2">
-                                <input class="form-check-input" name="ext_services[]" type="checkbox" value="{{ $ext_service->id.','.$ext_service->price }}" id="{{ $key }}">
-                                {{-- <input class="form-check-input" name="ext_services_id[]" type="hidden" value="{{ $ext_service->id }}" id="{{ $key }}"> --}}
-                                <label class="form-check-label" for="{{ $key }}">{{ $ext_service->name }}</label>
-                                <label class="form-check-label float-end">{{ $ext_service->price }} kyats / Day</label>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <span class="align-middle fw-bold">Total</span>
-                            <span class="float-end align-middle fw-bold"> <span id="total">{{ $room->price }}</span> Kyats</span>
-                            <input type="hidden" name="price" value="{{ $room->price }}" id="price">
-                        </div>
+                <div class="">
+                    <h3>Room Information</h3>
+                    <div class="row">
+                        <div class="col"><span class="h6">Bed</span></div>
+                        <div class="col">{{ $room->bed_count }} - {{ $room->beds }}</div>
                     </div>
                     <div class="row">
-                        <div class="col">
-                            <button type="button" class="btn btn-outline-primary">Add to Card</button>
-                            <button class="btn btn-primary float-end">Book Now</button>
-                        </div>
+                        <div class="col"><span class="h6">Room type</span></div>
+                        <div class="col">{{ $room->roomType->name }}</div>
                     </div>
                 </div>
             </div>
         </form>
+    </div> --}}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <div class="swiper mySwiper bg-light rounded"  style="height: 350px">
+                    <div class="swiper-wrapper">
+                        @foreach ($images as $key=>$image)
+                        <div class="swiper-slide">
+                            <img src="{{ url('asset/images/'.$image) }}" class="d-block w-100 h-100 mx-auto object-fit-cover" alt="...">
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                <div class="container mt-2">
+                    <div class="row gap-2">
+                        @for ($i=0;$i<4;$i++)
+                        <div class="col px-0" id="side-img">
+                            <img src="{{ url('asset/images/'.$images[$i]) }}" alt="..." class="rounded">
+                        </div>
+                        @endfor
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <div class="content h-100 d-flex flex-column justify-content-between">
+                    <h5>{{ $room->price }} Kyats/Night</h5>
+                    <h3>{{ $room->title }}</h3>
+                    <p>{{ $room->description }}</p>
+                    <div class="container">
+                        <div class="row">
+                            @foreach (json_decode($room->services) as $room_service)
+                            <div class="col-6 col-md-6 col-lg-4 p-0">
+                                @foreach ($freeServices as $freeService)
+                                    @if ($freeService->id == $room_service)
+                                    <i class="uil uil-check-circle text-success"></i> {{ $freeService->name }}
+                                    @endif
+                                @endforeach
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <h3>Room Information</h3>
+                    <div class="row">
+                        <div class="col"><span class="h6">Bed</span></div>
+                        <div class="col">{{ $room->bed_count }} - {{ $room->beds }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col"><span class="h6">Room type</span></div>
+                        <div class="col">{{ $room->roomType->name }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 

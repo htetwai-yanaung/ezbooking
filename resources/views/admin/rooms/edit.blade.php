@@ -103,7 +103,7 @@
                                     checked
                                 @endif
                             @endforeach
-                            value="{{ $service->name }}" id="{{ $service->id }}">
+                            value="{{ $service->id }}" id="{{ $service->id }}">
                             <label class="form-check-label" for="{{ $service->id }}">
                             {{ $service->name }}
                             </label>

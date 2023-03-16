@@ -102,7 +102,7 @@
                                     </div>
                                 </div>
                                 <span class="h6 text-primary">{{ $room->price }}Kyat/<small>Night</small></span>
-                                <p class="card-text mt-2">{{ $room->description }}</p>
+                                <p class="card-text mt-2">{{ Str::substr($room->description, 0, 150) }} ...</p>
                                 <div class="">
                                     <div class="row">
                                         @foreach (json_decode($room->services) as $room_service)

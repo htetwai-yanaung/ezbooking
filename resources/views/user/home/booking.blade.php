@@ -465,7 +465,7 @@
         $('input[name="guestOrUser"]').change(function(e) {
             $role = e.target.value;
             if($role == 'user'){
-                location.href = 'http://127.0.0.1:8000/login';
+                location.href = 'http://139.180.190.148/ezbooking/public/login';
             }
         });
 

@@ -16,6 +16,7 @@
 .wrapper .side-nav{
     width: 400px;
     height: 100%;
+    z-index: 100;
 }
 
 .logo{
@@ -188,7 +189,7 @@
         left: -250px;
     }
     section{
-        margin-top: 5rem;
+        margin-top: 1rem;
         margin-left: 0px;
     }
 }

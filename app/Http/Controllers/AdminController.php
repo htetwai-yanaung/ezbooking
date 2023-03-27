@@ -49,8 +49,19 @@ class AdminController extends Controller
 
     //dashboard
     public function dashboard(){
-        $bookings = Booking::all();
-        $checkInes = Booking::select('check_in as checkIn')->get()->toArray();
+        $booking_arr = array();
+        $bookings = Booking::with('room')->get();
+        // return $bookings;
+        foreach($bookings as $booking){
+            $booking_arr[] = [
+                'title' => $booking->room->title,
+                'start' => $booking->check_in,
+                'end' => $booking->check_out
+            ];
+        }
+        // return $booking_arr;
+        // return $booking_arr;
+        // return $date;
         // $checkIn_array = [];
         // $checkIn_user_name_array = [];
         // foreach($checkInes as $checkIn){
@@ -64,7 +75,7 @@ class AdminController extends Controller
         //     array_push($checkIn_user_name_array, $user->name);
         // }
         // return $checkIn_user_name_array;
-        return view('admin.booking.index');
+        return view('admin.booking.index')->with(['bookings' => $booking_arr]);
     }
 
     //room index

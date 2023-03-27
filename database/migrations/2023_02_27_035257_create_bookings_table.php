@@ -13,17 +13,26 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('room_id');
+            $table->string('room_id');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->enum('role',['guest','user'])->default('guest');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('nationality');
+            $table->string('address')->nullable();
+            $table->string('nrc_number')->nullable();
+            $table->string('passport')->nullable();
             $table->string('check_in', 10);
             $table->string('check_out', 10);
+            $table->tinyInteger('total_days');
             $table->tinyInteger('adult');
             $table->tinyInteger('child')->nullable();
             $table->string('ext_services')->nullable();
             $table->integer('first_charge');
             $table->string('payment_type');
             $table->string('payment_ss');
-            $table->integer('price');
+            $table->enum('status',['0','1','2'])->default('1');
             $table->timestamps();
         });
     }

@@ -167,11 +167,7 @@
                         <div class="col"><span class="h6">Room type</span></div>
                         <div class="col">{{ $room->roomType->name }}</div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-primary">Add</button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

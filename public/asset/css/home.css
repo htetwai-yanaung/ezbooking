@@ -176,6 +176,11 @@ section{
     background-color: #fff;
     z-index: 100;
 } */
+.image-container{
+    width: 100%;
+    height: 100%;
+    /* aspect-ratio: 1/1; */
+}
 
 #side-img{
     height: 100px;
@@ -249,10 +254,17 @@ section{
 }
 
 @media (max-width: 430px){
+    .container-fluid{
+        padding: 0 !important;
+    }
     .swiper{
         height: 200px !important;
     }
     #side-img{
         height: 50px;
+    }
+    .image-container{
+        width: 100%;
+        aspect-ratio: 2/1;
     }
 }

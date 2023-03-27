@@ -6,7 +6,8 @@
         <a href="{{ route('dashboard') }}" class="btn btn-outline-primary">Calendar View</a>
         <a href="{{ route('booking.list') }}" class="btn btn-outline-primary">List View</a>
     </div>
-    <article class="calendar">
+    <div id='calendar'></div>
+    {{-- <article class="calendar">
         <div class="calendar-header">
             <h3></h3>
             <div>
@@ -31,13 +32,28 @@
                 <span class="name-tag reject">Smith</span>
             </span>
         </div>
-    </article>
-    {{-- <input type="hidden" name="" id="checkInes" value="{{ $checkInes }}"> --}}
+    </article> --}}
 </section>
 @endsection
 
 @section('scriptSource')
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
 <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let events = @json($bookings);
+        console.log(events);
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        selectable: true,
+        events: events,
+      });
+      calendar.render();
+    });
+
+  </script>
+{{-- <script>
     let date = new Date();
     let currentDate = date.getDate();
     let currentMonth = date.getMonth();
@@ -57,22 +73,6 @@
         }
         document.querySelector('.calendar-header h3').innerText = `${months[currentMonth]} ${currentYear}`;
         document.querySelector('#dates').innerHTML = list;
-
-        /*start*/
-        // var checkInes_array = ;
-        // var userNames = ;
-        // for(var i=0; i<checkInes_array.length; i++){
-        //     var checkIn_date = checkInes_array[i].split('-');
-        //     var cdate = checkIn_date[2]*1;
-        //     if(currentMonth == checkIn_date[1]*1 - 1){
-        //         document.getElementById(cdate).innerHTML += `<span class="name-tag success">${userNames[i]}</span>`;
-        //     }
-        // }
-        /*end*/
-
-        // if(currentMonth == new Date().getMonth()){
-        //     document.getElementById(currentDate).innerHTML += `<span class="name-tag success">Smith</span>`;
-        // }
     }
     renderCalendar();
 
@@ -96,5 +96,5 @@
 
 
 
-</script>
+</script> --}}
 @endsection

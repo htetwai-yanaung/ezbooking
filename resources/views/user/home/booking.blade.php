@@ -81,28 +81,43 @@
             </div>
         @endforeach --}}
 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Your Photo</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" alt="" id="payment_photo2" class="w-100 h-100">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container-fluid">
             <div class="row">
-                <div class="col-7">
+                <div class="col-sm-12 col-md-6 col-lg-7">
                     @foreach ($rooms as $room)
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="row g-0">
-                          <div class="col-lg-5">
-                            <div class="" style="width: 100%; aspect-ratio: 1/1;">
+                          <div class="col-sm-6">
+                            <div class="image-container">
                                 <img src="{{ url('asset/images/'.$room->cover_photo) }}" class="img-fluid rounded-start" alt="..." style="height: 100%; width: 100%; object-fit: cover;">
                             </div>
                           </div>
-                          <div class="col-lg-7">
+                          <div class="col-sm-6">
                             <div class="card-body h-100 position-relative">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5 class="card-title lh-1">{{ $room->title }}</h5>
                                     <div class="">
-                                        <input type="checkbox" class="btn-check" id="{{ $room->id }}" autocomplete="off">
+                                        <input type="checkbox" name="room_id[]" class="btn-check" value="{{ $room->id }},{{ $room->price }},{{ $room->title }}" id="{{ $room->id }}" autocomplete="off">
                                         <label class="btn btn-outline-primary btn-sm" for="{{ $room->id }}"><i class="fa-solid fa-check"></i></label>
                                     </div>
                                 </div>
                                 <span class="h6 text-primary">{{ $room->price }}Kyat/<small>Night</small></span>
-                                <p class="card-text mt-2">{{ Str::substr($room->description, 0, 150) }} ...</p>
+                                <p class="card-text mt-2">{{ Str::substr($room->description, 0, 120) }} ...</p>
                                 <div class="">
                                     <div class="row">
                                         @foreach (json_decode($room->services) as $room_service)
@@ -134,55 +149,85 @@
                     </div>
                     @endforeach
                 </div>
-                <div class="col-5">
-                    <form class="bg-light p-3 border rounded">
+                <div class="col-sm-12 col-md-6 col-lg-5">
+
+                    @error('room_id_arr')
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Please!</strong> Select A Room.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @enderror
+
+
+                    <form action="{{ route('confirmBooking') }}" method="POST" class="bg-light p-3 border rounded" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" id="room_id_arr" name="room_id_arr">
+                        <input type="hidden" id="price" name="price">
+                        <input type="hidden" id="total_days" name="total_days">
                         <div class="row mb-2">
                             <div class="col">
                                 <label for="">Check Out</label>
-                                <input type="date" class="form-control">
+                                <input name="check_in" value="{{ old('check_in') }}" type="date" class="form-control @error('check_in') is-invalid @enderror" placeholder="check in">
                             </div>
                             <div class="col">
                                 <label for="">Check Out</label>
-                                <input type="date" class="form-control">
+                                <input name="check_out" value="{{ old('check_out') }}" type="date" class="form-control @error('check_out') is-invalid @enderror" placeholder="check out">
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col">
                                 <label for="">Adult</label>
-                                <input type="number" value="1" class="form-control">
+                                <input name="adult" value="1" type="number" class="form-control @error('adult') is-invalid @enderror">
                             </div>
                             <div class="col">
                                 <label for="">Child</label>
-                                <input type="number" value="0" class="form-control">
+                                <input name="child" value="0" type="number" class="form-control @error('child') is-invalid @enderror">
                             </div>
                         </div>
+                        <hr>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label for="">Total</label>
+                                <label for="" class="float-end"><span id="total_price">0</span> kyats</label>
+                            </div>
+                        </div>
+                        <hr>
+                        @if (!Auth::check())
                         <div class="row mb-2">
                             <div class="col">
                                 <label for="">Guest Or User</label>
-                                <select name="guest_or_user" id="" class="form-select">
-                                    <option value="guest">Guest</option>
-                                    <option value="user">User</option>
-                                </select>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="guestOrUser" value="guest" id="flexRadioDefault1" checked>
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                      Guest
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="guestOrUser" value="user" id="flexRadioDefault2">
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                      User
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col">
                                 <label for="">First Name</label>
-                                <input type="text" name="first_name" class="form-control" placeholder="first name">
+                                <input type="text" name="first_name" value="{{ old('first_name') }}" class="form-control @error('first_name') is-invalid @enderror" placeholder="first name">
                             </div>
                             <div class="col">
                                 <label for="">Last Name</label>
-                                <input type="text" name="last_name" class="form-control" placeholder="last name">
+                                <input type="text" name="last_name" value="{{ old('last_name') }}" class="form-control @error('last_name') is-invalid @enderror" placeholder="last name">
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col">
                                 <label for="">Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="email">
+                                <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="email">
                             </div>
                             <div class="col">
                                 <label for="">Phone</label>
-                                <input type="number" name="phone" class="form-control" placeholder="phone">
+                                <input type="number" name="phone" value="{{ old('phone') }}" class="form-control @error('phone') is-invalid @enderror" placeholder="phone">
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -197,18 +242,133 @@
                         <div class="row mb-2" id="address_section">
                             <div class="col">
                                 <label for="">Address</label>
-                                <input type="email" name="address" class="form-control" placeholder="address">
+                                <input type="text" name="address" value="{{ old('address') }}" class="form-control @error('address') is-invalid @enderror" placeholder="address">
                             </div>
                             <div class="col">
                                 <label for="">NRC Number</label>
-                                <input type="number" name="nrc_number" class="form-control" placeholder="nrc number">
+                                <input type="text" name="nrc_number" value="{{ old('nrc_number') }}" class="form-control @error('nrc_number') is-invalid @enderror" placeholder="nrc number">
                             </div>
                         </div>
                         <div class="row mb-2" id="passport_section">
                             <div class="col">
                                 <label for="">Passport</label>
-                                <input type="text" name="passport" class="form-control" placeholder="passport number">
+                                <input type="text" name="passport" value="{{ old('passport') }}" class="form-control @error('passport') is-invalid @enderror" placeholder="passport number">
                             </div>
+                        </div>
+                        <hr>
+                        @endif
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label for="" class="">Payment Method</label>
+                                {{-- payment type  --}}
+                                <ul class="nav nav-pills bg-light mb-1" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                    <button class="nav-link tab-link active me-4" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">1. Mobile Pay</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                    <button class="nav-link tab-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">2. Bank Transfer</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+                                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                                            <div class="accordion-item">
+                                                <div class="p-2">
+                                                    <input type="radio" value="kbz_pay" name="payment_type" id="pay_one" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                    <label class="ms-2" for="pay_one">KBZ Pay</label>
+                                                </div>
+                                                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                    <div class="py-2 ps-4 bg-light accordion-body">
+                                                        <span class="ms-2">Admin: 09971234567</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <div class="p-2">
+                                                    <input type="radio" value="aya_pay" name="payment_type" id="pay_two" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                    <label class="ms-2" for="pay_two">AYA Pay</label>
+                                                </div>
+                                                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                    <div class="py-2 ps-4 bg-light accordion-body">
+                                                        <span class="ms-2">Admin: 09971234567</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <div class="p-2">
+                                                    <input type="radio" value="wave_pay" name="payment_type" id="pay_three" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                                    <label class="ms-2" for="pay_three">WAVE Pay</label>
+                                                </div>
+                                                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                    <div class="py-2 ps-4 bg-light accordion-body">
+                                                        <span class="ms-2">Admin: 09971234567</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+                                        <div class="accordion accordion-flush" id="accordionFlushExample2">
+                                            <div class="accordion-item">
+                                                <div class="p-2">
+                                                    <input type="radio" value="kbz_bank" name="payment_type" id="pay_four" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                                    <label class="ms-2" for="pay_four">KBZ Bank</label>
+                                                </div>
+                                                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample2">
+                                                    <div class="py-2 ps-4 bg-light accordion-body">
+                                                        <span class="ms-2">Admin: 09971234567</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <div class="p-2">
+                                                    <input type="radio" value="aya_bank" name="payment_type" id="pay_five" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                                    <label class="ms-2" for="pay_five">AYA Bank</label>
+                                                </div>
+                                                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample2">
+                                                    <div class="py-2 ps-4 bg-light accordion-body">
+                                                        <span class="ms-2">Admin: 09971234567</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <div class="p-2">
+                                                    <input type="radio" value="yoma_bank" name="payment_type" id="pay_six" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                                    <label class="ms-2" for="pay_six">Yoma Bank</label>
+                                                </div>
+                                                <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample2">
+                                                    <div class="py-2 ps-4 bg-light accordion-body">
+                                                        <span class="ms-2">Admin: 09971234567</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @error('payment_type')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                                {{-- payment type  --}}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label for="">First Charged Amount</label>
+                                <input type="number" name="first_charge" value="{{ old('first_charge') }}" placeholder="000000" class="form-control @error('first_charge') is-invalid @enderror">
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="mb-2" for="">Upload Payment Screenshort</label>
+                            <div class="col-12 d-flex">
+                                <label for="payment_ss" class="bg-white rounded border" id="payment_photo_btn">+</label>
+                                <input type="file" name="payment_ss" id="payment_ss" class="d-none">
+                                <div class="border rounded payment-photo-container ms-1">
+                                    <img src="" class="" data-bs-toggle="modal" data-bs-target="#exampleModal" id="payment_photo">
+                                </div>
+                            </div>
+                            @error('payment_ss')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="row">
                             <div class="col mt-2">
@@ -224,18 +384,120 @@
 
 @section('scriptSource')
 <script>
+    let calendar = flatpickr("input[type=date]", {
+        minDate: "today",
+    });
+    // console.log(calendar.selectedDates);
+</script>
+<script>
     $(document).ready(function(){
         //nationality
         $('#passport_section').hide();
+        $nationality = localStorage.getItem('nationality');
+        if($nationality == 'myanmar'){
+            $('#nationality option[value="myanmar"]').prop('selected', true);
+            $('#address_section').show();
+            $('#passport_section').hide();
+        }else{
+            $('#nationality option[value="foreign"]').prop('selected', true);
+            $('#address_section').hide();
+            $('#passport_section').show();
+        }
         $('#nationality').change(function(e){
             if(e.target.value == 'myanmar'){
                 $('#address_section').show();
                 $('#passport_section').hide();
+                localStorage.setItem('nationality', e.target.value);
             }else{
                 $('#address_section').hide();
                 $('#passport_section').show();
+                localStorage.setItem('nationality', e.target.value);
             }
         })
+
+        $('.payment-photo-container').hide();
+
+        $('#payment_ss').change(function(e){
+            console.log(e.target.files);
+            document.querySelector('#payment_photo').src = URL.createObjectURL(e.target.files[0])
+            document.querySelector('#payment_photo2').src = URL.createObjectURL(e.target.files[0])
+            $('.payment-photo-container').show();
+        })
+
+        //btn-check
+        $total_price = 0;
+        $total_day = 1;
+        $room_id_arr = [];
+        $selected_room = JSON.parse(localStorage.getItem('room_id_arr'));
+        // for($i=0;$i<$selected_room.length;$i++){
+        //     $room_id_arr.push($selected_room[$i]);
+        //     document.getElementById($selected_room[$i]).checked = true
+        // }
+        // console.log($room_id_arr);
+
+
+
+
+        $('.btn-check').change(function() {
+            if ($(this).is(':checked')) {
+                [$id, $price, $title] = $(this).val().split(',');
+                $room_id_arr.push($id);
+                $('#room_id_arr').val($room_id_arr);
+
+                localStorage.setItem('room_id_arr', JSON.stringify($room_id_arr));
+                $total_price += $price*1;
+                $('#total_price').html($total_price);
+                total();
+            }
+            else {
+                [$id, $price, $title] = $(this).val().split(',');
+                $index = $room_id_arr.indexOf($id);
+                $room_id_arr.splice($index, 1);
+                $('#room_id_arr').val($room_id_arr);
+
+                localStorage.setItem('room_id_arr', JSON.stringify($room_id_arr));
+                $total_price -= $price*1;
+                $('#total_price').html($total_price);
+                total();
+            }
+        });
+
+        $('input[name="guestOrUser"]').change(function(e) {
+            $role = e.target.value;
+            if($role == 'user'){
+                location.href = 'http://127.0.0.1:8000/login';
+            }
+        });
+
+        let date1 = new Date();
+        let date2 = new Date();
+
+        $('input[name="check_in"]').change(function(e){
+            date1 = new Date(e.target.value);
+            calDay(date1, date2);
+        })
+        $('input[name="check_out"]').change(function(e){
+            date2 = new Date(e.target.value);
+            calDay(date1, date2);
+        })
+
+        function calDay(date1, date2){
+            // Calculate the time difference between the two dates in milliseconds
+            const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+            // Calculate the number of days between the two dates by dividing the time difference by the number of milliseconds in a day (86400000)
+            const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            $total_day = diffDays;
+            console.log($total_day);
+            total();
+        }
+
+        total = () => {
+            $final_price = $total_price * $total_day;
+            $('#total_price').text($final_price);
+            $('#price').val($final_price);
+            $('#total_days').val($total_day);
+        }
+
     })
 </script>
 @endsection

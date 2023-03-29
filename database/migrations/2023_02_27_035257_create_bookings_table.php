@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->string('room_id');
+            $table->string('booking_number');
             $table->string('first_name');
             $table->string('last_name');
             $table->enum('role',['guest','user'])->default('guest');

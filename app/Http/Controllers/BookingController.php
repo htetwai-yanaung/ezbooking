@@ -154,6 +154,7 @@ class BookingController extends Controller
         }else{
             $user_data = $this->userData($request, $request, 'guest', $photo);
         }
+        // return $user_data;
         foreach($user_data as $userData){
             Booking::create($userData);
         }
@@ -211,6 +212,7 @@ class BookingController extends Controller
         foreach($rooms as $room){
             $data[] = [
                 'room_id' => $room,
+                'booking_number' => $request->booking_number,
                 'check_in' => $request->check_in,
                 'check_out' => $request->check_out,
                 'total_days' => $request->total_days,

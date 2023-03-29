@@ -112,11 +112,12 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5 class="card-title lh-1">{{ $room->title }}</h5>
                                     <div class="">
-                                        <input type="checkbox" name="room_id[]" class="btn-check" value="{{ $room->id }},{{ $room->price }},{{ $room->title }}" id="{{ $room->id }}" autocomplete="off">
+                                        <input type="checkbox" name="room_id[]" class="btn-check" value="{{ $room->id }},{{ $room->price }},{{ $room->usd }},{{ $room->title }}" id="{{ $room->id }}" autocomplete="off">
                                         <label class="btn btn-outline-primary btn-sm" for="{{ $room->id }}"><i class="fa-solid fa-check"></i></label>
                                     </div>
                                 </div>
-                                <span class="h6 text-primary">{{ $room->price }}Kyat/<small>Night</small></span>
+                                <span class="kyats h6 text-primary">{{ $room->price }}Kyats/<small>Night</small></span>
+                                <span class="usd h6 text-primary">$ {{ $room->usd }}/<small>Night</small></span>
                                 <p class="card-text mt-2">{{ Str::substr($room->description, 0, 120) }} ...</p>
                                 <div class="">
                                     <div class="row">
@@ -164,13 +165,14 @@
                         <input type="hidden" id="room_id_arr" name="room_id_arr">
                         <input type="hidden" id="price" name="price">
                         <input type="hidden" id="total_days" name="total_days">
+                        <input type="hidden" id="booking_number" name="booking_number">
                         <div class="row mb-2">
                             <div class="col">
-                                <label for="">Check Out</label>
+                                <label for="">Check-In Date</label>
                                 <input name="check_in" value="{{ old('check_in') }}" type="date" class="form-control @error('check_in') is-invalid @enderror" placeholder="check in">
                             </div>
                             <div class="col">
-                                <label for="">Check Out</label>
+                                <label for="">Check-Out Date</label>
                                 <input name="check_out" value="{{ old('check_out') }}" type="date" class="form-control @error('check_out') is-invalid @enderror" placeholder="check out">
                             </div>
                         </div>
@@ -186,16 +188,20 @@
                         </div>
                         <hr>
                         <div class="row mb-2">
-                            <div class="col">
+                            <div class="col kyats">
                                 <label for="">Total</label>
-                                <label for="" class="float-end"><span id="total_price">0</span> kyats</label>
+                                <label for="" class="float-end"><span id="total_price">0</span> Kyats</label>
+                            </div>
+                            <div class="col usd">
+                                <label for="">Total</label>
+                                <label for="" class="float-end">$ <span id="total_usd">0</span></label>
                             </div>
                         </div>
                         <hr>
                         @if (!Auth::check())
                         <div class="row mb-2">
                             <div class="col">
-                                <label for="">Guest Or User</label>
+                                <label for="">Login with Guest Or User</label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="guestOrUser" value="guest" id="flexRadioDefault1" checked>
                                     <label class="form-check-label" for="flexRadioDefault1">
@@ -353,12 +359,12 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col">
-                                <label for="">First Charged Amount</label>
-                                <input type="number" name="first_charge" value="{{ old('first_charge') }}" placeholder="000000" class="form-control @error('first_charge') is-invalid @enderror">
+                                <label for="">Deposit Amount</label>
+                                <input type="number" name="first_charge" value="{{ old('first_charge') }}" placeholder="Eg. 100000" class="form-control @error('first_charge') is-invalid @enderror">
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <label class="mb-2" for="">Upload Payment Screenshort</label>
+                            <label class="mb-2" for="">Payment Reciept</label>
                             <div class="col-12 d-flex">
                                 <label for="payment_ss" class="bg-white rounded border" id="payment_photo_btn">+</label>
                                 <input type="file" name="payment_ss" id="payment_ss" class="d-none">
@@ -372,7 +378,7 @@
                         </div>
                         <div class="row">
                             <div class="col mt-2">
-                                <button class="btn btn-primary col-12">Book Now</button>
+                                <button class="btn btn-primary col-12" id="save">Book Now</button>
                             </div>
                         </div>
                     </form>
@@ -393,24 +399,33 @@
     $(document).ready(function(){
         //nationality
         $('#passport_section').hide();
+        $('#usd').hide();
         $nationality = localStorage.getItem('nationality');
         if($nationality == 'myanmar'){
             $('#nationality option[value="myanmar"]').prop('selected', true);
             $('#address_section').show();
             $('#passport_section').hide();
+            $('.kyats').show();
+            $('.usd').hide();
         }else{
             $('#nationality option[value="foreign"]').prop('selected', true);
             $('#address_section').hide();
             $('#passport_section').show();
+            $('.kyats').hide();
+            $('.usd').show();
         }
         $('#nationality').change(function(e){
             if(e.target.value == 'myanmar'){
                 $('#address_section').show();
                 $('#passport_section').hide();
+                $('.kyats').show();
+                $('.usd').hide();
                 localStorage.setItem('nationality', e.target.value);
             }else{
                 $('#address_section').hide();
                 $('#passport_section').show();
+                $('.kyats').hide();
+                $('.usd').show();
                 localStorage.setItem('nationality', e.target.value);
             }
         })
@@ -426,6 +441,7 @@
 
         //btn-check
         $total_price = 0;
+        $total_usd = 0;
         $total_day = 1;
         $room_id_arr = [];
         $selected_room = JSON.parse(localStorage.getItem('room_id_arr'));
@@ -440,24 +456,28 @@
 
         $('.btn-check').change(function() {
             if ($(this).is(':checked')) {
-                [$id, $price, $title] = $(this).val().split(',');
+                [$id, $price, $usd, $title] = $(this).val().split(',');
                 $room_id_arr.push($id);
                 $('#room_id_arr').val($room_id_arr);
 
                 localStorage.setItem('room_id_arr', JSON.stringify($room_id_arr));
                 $total_price += $price*1;
+                $total_usd += $usd*1;
                 $('#total_price').html($total_price);
+                $('#total_usd').html($total_usd);
                 total();
             }
             else {
-                [$id, $price, $title] = $(this).val().split(',');
+                [$id, $price, $usd, $title] = $(this).val().split(',');
                 $index = $room_id_arr.indexOf($id);
                 $room_id_arr.splice($index, 1);
                 $('#room_id_arr').val($room_id_arr);
 
                 localStorage.setItem('room_id_arr', JSON.stringify($room_id_arr));
                 $total_price -= $price*1;
+                $total_usd -= $usd*1;
                 $('#total_price').html($total_price);
+                $('#total_usd').html($total_usd);
                 total();
             }
         });
@@ -493,10 +513,18 @@
 
         total = () => {
             $final_price = $total_price * $total_day;
+            $final_usd = $total_usd * $total_day;
             $('#total_price').text($final_price);
+            $('#total_usd').text($final_usd);
             $('#price').val($final_price);
             $('#total_days').val($total_day);
         }
+
+        $('#save').click(function() {
+            $random = Math.floor(Math.random() * 100001);
+            $clCode = 'EZB'+$random;
+            $('#booking_number').val($clCode);
+        })
 
     })
 </script>

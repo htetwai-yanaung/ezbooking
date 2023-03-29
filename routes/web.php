@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\FreeServiceController;
 
@@ -58,4 +59,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
             Route::post('/update/{id}', [FreeServiceController::class, 'update'])->name('services.update');
         });
     });
+
+    Route::get('booking/history/{id}', [HistoryController::class, 'history'])->name('history.index');
 });

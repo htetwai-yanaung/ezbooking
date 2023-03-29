@@ -90,7 +90,7 @@
 
         @if (Auth::user())
         <ul class="dropdown-menu  dropdown-menu-end">
-            <li><a href="" class="dropdown-item">Booking History</a></li>
+            <li><a href="{{ route('history.index', Auth::user()->id) }}" class="dropdown-item">Booking History</a></li>
             <li><a href="" class="dropdown-item">Messages</a></li>
             <li><a href="" class="dropdown-item">Wishlists</a></li>
             <li><hr class="dropdown-divider"></li>

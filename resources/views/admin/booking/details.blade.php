@@ -28,14 +28,21 @@
                                 <div class="col-5">Nationality :</div>
                                 <div class="col">{{ $booking->nationality }}</div>
                             </div>
+                            @if ($booking->nationality == 'Myanmar')
                             <div class="row p-2 mb-1">
                                 <div class="col-5">NRC Number :</div>
                                 <div class="col">{{ $booking->nrc_number }}</div>
                             </div>
                             <div class="row p-2 mb-1">
+                                <div class="col-5">Address :</div>
+                                <div class="col">{{ $booking->address }}</div>
+                            </div>
+                            @else
+                            <div class="row p-2 mb-1">
                                 <div class="col-5">Passport Number :</div>
                                 <div class="col">{{ $booking->passport }}</div>
                             </div>
+                            @endif
                             <div class="row p-2 mb-1">
                                 <div class="col-5">Room Number :</div>
                                 <div class="col">{{ $booking->room_id }}</div>
@@ -69,7 +76,7 @@
                                 <div class="col">{{ $booking->room->price * $booking->total_days }} Kyats</div>
                             </div>
                             <div class="row p-2 mb-1">
-                                <div class="col-5">Fitst Charge :</div>
+                                <div class="col-5">Deposit :</div>
                                 <div class="col">{{ $booking->first_charge }} Kyats</div>
                             </div>
                             <div class="row p-2 mb-1">
